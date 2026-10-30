@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-sage-900: #34442E;   /* headings, dark text */
+  --color-sage-700: #4E6142;   /* primary buttons, sidebar, footer band */
+  --color-sage-600: #5F7350;   /* hover / active */
+  --color-sage-300: #A9B79A;   /* borders, subtle lines */
+  --color-sage-100: #E4EADB;   /* tinted chips */
+  --color-cream-50: #FBF7F0;   /* page background */
+  --color-cream-100: #F5EEE3;  /* section bands, inputs */
+  --color-cream-200: #ECE1D0;  /* wavy band, card bg */
+  --color-blush-100: #F8E6E1;  /* pink cards */
+  --color-blush-200: #F2D3CB;  /* pink card hover */
+  --color-wood: #C9A27A;       /* accents, prices strike */
+  --color-ink: #2F3A2A;        /* body text */
+  --color-muted: #6E7766;      /* secondary text */
+  --color-terracotta: #B8614E; /* errors only */
+
+  --radius-card: 18px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 6px 20px -8px rgba(52, 68, 46, 0.18);
+  --shadow-lift: 0 14px 30px -12px rgba(52, 68, 46, 0.28);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-hand: var(--font-gochi), "Caveat", cursive;  /* headings */
+  --font-logo: var(--font-fredoka), sans-serif;      /* logo + numbers */
+  --font-body: var(--font-nunito), sans-serif;       /* body, nav, buttons */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream-50);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
 }
+::selection { background: var(--color-sage-100); color: var(--color-sage-900); }
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-pill bg-sage-700 px-6 py-3 font-hand text-[18px] tracking-wide text-cream-50 shadow-soft transition-colors hover:bg-sage-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-600 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-pill border-[1.5px] border-sage-700 bg-transparent px-6 py-3 font-hand text-[18px] tracking-wide text-sage-900 transition-colors hover:bg-sage-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-600 focus-visible:ring-offset-2 focus-visible:ring-offset-cream-50;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-1.5 rounded-pill font-hand text-[17px] tracking-wide text-sage-900 transition-colors hover:text-sage-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-600;
+  }
+  .arrow-nudge { @apply transition-transform duration-200 group-hover:translate-x-1; }
+  .section-title { @apply font-hand text-[34px] leading-tight text-sage-900 sm:text-[42px]; }
+  .field {
+    @apply w-full rounded-[12px] border-[1.5px] border-sage-300 bg-cream-50 px-4 py-3 text-[15px] text-ink placeholder:text-muted/70 transition focus:border-sage-600 focus:outline-none focus:ring-2 focus:ring-sage-600/30;
+  }
+  .field-error { @apply border-terracotta focus:border-terracotta focus:ring-terracotta/25; }
+  .label { @apply mb-1.5 block text-[14px] font-semibold text-sage-900; }
+  .icon-btn {
+    @apply relative inline-flex h-10 w-10 items-center justify-center rounded-pill text-sage-900 transition-colors hover:bg-cream-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-600;
+  }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+}
+
+/* knit-ish texture used on placeholder image blocks */
+.knit {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(52, 68, 46, 0.07) 1px, transparent 0);
+  background-size: 14px 14px;
+}
+
+@keyframes floaty { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-6px) rotate(-3deg); } }
+.floaty { animation: floaty 5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .floaty { animation: none; } html { scroll-behavior: auto; } }
