@@ -1,5 +1,5 @@
-// Mock catalogue. Shape matches what a Supabase `products` table would return,
-// so swapping this for a fetch later only touches this file.
+// Local catalogue — used when Supabase isn't configured (or is unreachable). Pages read products through
+// lib/catalog.ts, which maps Supabase `products` rows into this same shape.
 //
 // Images: a URL or a real path ("/images/bunny-1.jpg") renders with next/image.
 // "ph:<doodle>:<tone>" renders a soft placeholder block until real photos exist.
@@ -98,7 +98,7 @@ export const products: Product[] = [
     name: "Cloud Scrunchie Set",
     price: 950,
     images: [unsplash("1606772016409-d4a55e32be6e"), unsplash("1671272980311-9055ae800653")],
-    category: "accessories",
+    category: "hair-accessories",
     colors: [
       { name: "Pastels", hex: "#F8E6E1" },
       { name: "Earthy", hex: "#C9A27A" },
@@ -116,7 +116,7 @@ export const products: Product[] = [
     name: "Little Lamb Rattle",
     price: 1650,
     images: [unsplash("1602773974733-b56200c8653f"), unsplash("1784368611073-1f2c83e7c7a0")],
-    category: "baby",
+    category: "amigurumi",
     colors: [{ name: "Cream", hex: "#F5EEE3" }],
     rating: 4.9,
     reviews: 41,
@@ -161,16 +161,32 @@ export const products: Product[] = [
     name: "Tiny Joy Gift Box",
     price: 4200,
     images: [unsplash("1751450236048-aa1981f7bc2d"), unsplash("1707944145479-12755f0434d8"), unsplash("1625552186152-668cd2f0b707")],
-    category: "gifts",
+    category: "gift-sets",
     rating: 5,
     reviews: 29,
     description: "A mini amigurumi, a scrunchie set and a bookmark, tucked into a ribboned box with your note.",
     materials: "Assorted cotton crochet pieces, recycled kraft box.",
     care: "See each item's card inside the box.",
   },
-];
 
-export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
-export const bestsellers = products.filter((p) => p.bestseller);
-export const byCategory = (slug?: string) =>
-  slug ? products.filter((p) => p.category === slug) : products;
+  // --- Clothing ---
+  {
+    id: "p16",
+    slug: "daisy-crochet-cardigan",
+    name: "Daisy Crochet Cardigan",
+    price: 6800,
+    images: [unsplash("1679847628912-4c3e7402abc7"), unsplash("1752133945372-68600078efe2")],
+    category: "cardigans",
+    colors: [
+      { name: "Cream & brown", hex: "#C9A27A" },
+      { name: "Sage", hex: "#A9B79A" },
+    ],
+    sizes: ["S", "M", "L"],
+    rating: 5,
+    reviews: 19,
+    description: "Granny-square cardigan, hooked by hand square by square. Takes about a week to make each one — worth every loop.",
+    materials: "Soft cotton-acrylic yarn, wooden buttons.",
+    care: "Hand wash cold, dry flat. Never hang — it stretches.",
+    bestseller: true,
+  },
+];

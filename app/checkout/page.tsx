@@ -86,6 +86,7 @@ export default function CheckoutPage() {
   const [touched, setTouched] = useState<Partial<Record<Field, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [orderError, setOrderError] = useState<string | null>(null);
   const [summaryOpen, setSummaryOpen] = useState(false);
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -139,9 +140,32 @@ export default function CheckoutPage() {
       return;
     }
     setSubmitting(true);
-    // Replace with a real API call (e.g. Supabase insert) — mock delay for now.
-    await new Promise((r) => setTimeout(r, 1200));
-    const orderNo = `SZ-${Date.now().toString().slice(-6)}`;
+    setOrderError(null);
+    let orderNo = "";
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: form,
+          items: lines.map((l) => ({ slug: l.slug, qty: l.qty, color: l.color, size: l.size })),
+          shipping,
+          payment,
+          coupon,
+          giftWrap,
+          giftNote,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok) orderNo = data.orderNo;
+      // 503 = Supabase not connected yet (local demo) — keep the old mock flow so the store still works.
+      else if (res.status === 503) orderNo = `SZ-${Date.now().toString().slice(-6)}`;
+      else throw new Error(data.error || "We couldn't place your order. Please try again.");
+    } catch (err) {
+      setOrderError(err instanceof Error ? err.message : "We couldn't place your order. Please try again.");
+      setSubmitting(false);
+      return;
+    }
     try {
       sessionStorage.setItem(
         "sezon-last-order",
@@ -423,6 +447,11 @@ export default function CheckoutPage() {
             {submitted && Object.keys(errors).length > 0 && (
               <p role="alert" className="rounded-[12px] bg-blush-100 px-4 py-3 text-[14px] text-terracotta">
                 A few details need a second look before we can place your order.
+              </p>
+            )}
+            {orderError && (
+              <p role="alert" className="rounded-[12px] bg-blush-100 px-4 py-3 text-[14px] text-terracotta">
+                {orderError}
               </p>
             )}
 

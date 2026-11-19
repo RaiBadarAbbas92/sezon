@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { getProduct, type Product } from "./products";
+import { useCatalog } from "./catalog-context";
+import type { Product } from "./products";
 
 export interface CartLine {
   key: string; // slug + options, so the same toy in two colours is two lines
@@ -30,7 +31,7 @@ interface CartContextValue {
 const STORAGE_KEY = "sezon-cart-v1";
 const CartContext = createContext<CartContextValue | null>(null);
 
-function readStorage(): CartLine[] {
+function readStorage(getProduct: (slug: string) => Product | undefined): CartLine[] {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
@@ -49,13 +50,15 @@ function writeStorage(lines: CartLine[]) {
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const { products } = useCatalog();
+  const getProduct = useCallback((slug: string) => products.find((p) => p.slug === slug), [products]);
   const [raw, setRaw] = useState<CartLine[]>([]);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setRaw(readStorage());
+    setRaw(readStorage(getProduct));
     setReady(true);
-  }, []);
+  }, [getProduct]);
 
   useEffect(() => {
     if (ready) writeStorage(raw);
@@ -96,7 +99,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       remove,
       clear,
     };
-  }, [raw, ready, add, setQty, remove, clear]);
+  }, [raw, ready, add, setQty, remove, clear, getProduct]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
@@ -107,18 +110,4 @@ export function useCart() {
   return ctx;
 }
 
-// Shared pricing rules so cart and checkout always agree.
-export const FREE_SHIPPING_FROM = 5000;
-export const shippingMethods = [
-  { id: "standard", label: "Standard delivery", eta: "3–5 working days", price: 250 },
-  { id: "express", label: "Express delivery", eta: "1–2 working days", price: 450 },
-] as const;
-export type ShippingId = (typeof shippingMethods)[number]["id"];
-export const GIFT_WRAP_PRICE = 150;
-export const coupons: Record<string, number> = { SEZON10: 0.1, HANDMADE15: 0.15 };
-
-export function shippingCost(method: ShippingId, subtotal: number) {
-  const m = shippingMethods.find((s) => s.id === method)!;
-  if (method === "standard" && subtotal >= FREE_SHIPPING_FROM) return 0;
-  return m.price;
-}
+export { FREE_SHIPPING_FROM, GIFT_WRAP_PRICE, coupons, shippingCost, shippingMethods, type ShippingId } from "./pricing";

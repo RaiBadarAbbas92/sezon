@@ -5,7 +5,7 @@ import WavyDivider from "./WavyDivider";
 
 const items = [
   { icon: Leaf, title: "Handmade with love", text: "Every piece stitched by hand, never machine made." },
-  { icon: YarnBall, title: "High quality cotton yarn", text: "Soft, breathable and kind to little hands." },
+  { icon: YarnBall, title: "High quality yarn", text: "Carefully selected premium Turkish yarn, gentle to touch, durable and lint free." },
   { icon: Truck, title: "Nationwide delivery", text: "Anywhere in Pakistan, Cash on Delivery too." },
   { icon: Heart, title: "Custom designs available", text: "Your colours, your idea, our hooks." },
 ];

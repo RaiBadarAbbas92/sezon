@@ -12,8 +12,8 @@ import WhyUs from "@/components/WhyUs";
 import Newsletter from "@/components/Newsletter";
 import { InstagramIcon, WhatsAppIcon } from "@/components/social-icons";
 import { CurvyArrow, Heart, Sparkle, Sprig, Star, YarnBall } from "@/components/doodles";
-import { brand, categories, whatsappLink } from "@/lib/brand";
-import { bestsellers } from "@/lib/products";
+import { brand, whatsappLink } from "@/lib/brand";
+import { getCatalog } from "@/lib/catalog";
 
 const reviews = [
   { name: "Hira K.", city: "Karachi", text: "The bunny is even softer in person. My daughter hasn't let go of it since it arrived!", rating: 5 },
@@ -21,7 +21,10 @@ const reviews = [
   { name: "Zara T.", city: "Lahore", text: "The tulip bouquet sits on my desk and gets compliments every single day. Worth it.", rating: 5 },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const { products, categories } = await getCatalog();
+  const bestsellers = products.filter((p) => p.bestseller).slice(0, 8);
+
   return (
     <>
       <Header />
@@ -39,7 +42,7 @@ export default function Home() {
               <Heart size={34} className="ml-2 inline-block -translate-y-2 rotate-12 fill-blush-200 text-wood" />
             </h1>
             <p className="mt-5 max-w-[380px] font-hand text-[19px] leading-snug tracking-wide text-muted sm:text-[21px]">
-              Soft crochet friends, bags and little home joys — each one stitched slowly by hand, just for you.
+              Cosy cardigans, cute bags and soft crochet joys — each one stitched with care, just for you.
             </p>
             <div className="mt-7 flex items-center gap-4">
               <Link href="/shop" className="btn-primary group px-8">
@@ -89,7 +92,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="no-scrollbar -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:grid-cols-5">
-            {categories.slice(0, 5).map((c, i) => (
+            {categories.slice(0, 10).map((c, i) => (
               <CategoryCard key={c.slug} category={c} index={i} />
             ))}
           </div>
@@ -132,10 +135,11 @@ export default function Home() {
             </div>
             <div>
               <HandwrittenAside className="mb-2 text-wood">dream it, we&apos;ll hook it</HandwrittenAside>
-              <h2 id="custom-title" className="section-title">Have something special in mind?</h2>
+              <h2 id="custom-title" className="section-title">Have an idea in mind?</h2>
               <p className="mt-3 max-w-[440px] text-[15px] leading-relaxed text-muted">
-                Send us a sketch, a photo or just an idea — a mini version of your pet, a bag in your colours, a name on
-                a teddy. We&apos;ll share a quote and a little preview before we start.
+                From cosy cardigans and cute crochet bags to adorable plushies, accessories and personalised gifts — tell
+                us what you&apos;re imagining. Share a photo, sketch or simply describe your idea. We&apos;ll bring it to
+                life, stitch by stitch!
               </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a href={whatsappLink("Hi! I'd like to order a custom piece.")} target="_blank" rel="noopener noreferrer" className="btn-primary group">

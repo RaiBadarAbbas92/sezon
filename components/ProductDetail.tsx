@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { ArrowRight, Banknote, Check, Clock, Heart, ShoppingBasket, Sparkles, Truck } from "lucide-react";
-import { brand, categories, currency, whatsappLink } from "@/lib/brand";
+import { brand, currency, whatsappLink } from "@/lib/brand";
 import { useCart } from "@/lib/cart";
+import { useCatalog } from "@/lib/catalog-context";
+import { findCategory } from "@/lib/categories";
 import type { Product } from "@/lib/products";
 import ProductImage from "./ProductImage";
 import ProductCard from "./ProductCard";
@@ -24,7 +26,9 @@ const sampleReviews = [
 
 export default function ProductDetail({ product, alsoLove }: { product: Product; alsoLove: Product[] }) {
   const { add } = useCart();
-  const category = categories.find((c) => c.slug === product.category);
+  const { categories } = useCatalog();
+  const hit = findCategory(product.category, categories);
+  const category = hit?.sub ?? hit?.section;
   const [img, setImg] = useState(0);
   const [color, setColor] = useState(product.colors?.[0]?.name);
   const [size, setSize] = useState(product.sizes?.[0]);
@@ -60,7 +64,19 @@ export default function ProductDetail({ product, alsoLove }: { product: Product;
       <nav aria-label="Breadcrumb" className="font-hand text-[15px] tracking-wide text-muted">
         <Link href="/" className="hover:text-sage-900">Home</Link>
         {" / "}
-        <Link href={`/shop?category=${product.category}`} className="hover:text-sage-900">{category?.label ?? "Shop"}</Link>
+        {hit ? (
+          <>
+            <Link href={`/${hit.section.slug}`} className="hover:text-sage-900">{hit.section.label}</Link>
+            {hit.sub && (
+              <>
+                {" / "}
+                <Link href={`/${hit.section.slug}/${hit.sub.slug}`} className="hover:text-sage-900">{hit.sub.label}</Link>
+              </>
+            )}
+          </>
+        ) : (
+          <Link href="/shop" className="hover:text-sage-900">Shop</Link>
+        )}
         {" / "}
         <span className="text-sage-900">{product.name}</span>
       </nav>

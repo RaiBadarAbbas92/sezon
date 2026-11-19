@@ -11,12 +11,12 @@ export const photos = {
   sketch: unsplash("1732391928574-117e1d266084"), // pattern sketch + yarn
   finished: unsplash("1753370241583-82d8c84f0c6e"), // finished bunny with flowers
   categories: {
-    amigurumi: unsplash("1755315897817-97bd6ec34256"),
-    bags: unsplash("1787432131008-c754654978a4"),
-    "home-decor": unsplash("1753366556699-4be495e5bdd6"),
+    clothing: unsplash("1752133945372-68600078efe2"),
     accessories: unsplash("1606772016409-d4a55e32be6e"),
-    baby: unsplash("1602773974733-b56200c8653f"),
+    bags: unsplash("1787432131008-c754654978a4"),
+    "home-living": unsplash("1753366556699-4be495e5bdd6"),
     gifts: unsplash("1707944145479-12755f0434d8"),
+    amigurumi: unsplash("1755315897817-97bd6ec34256"),
   } as Record<string, string>,
   instagram: [
     unsplash("1777537953560-10fda7d9965a"),

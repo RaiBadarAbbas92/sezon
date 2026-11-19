@@ -1,13 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/brand/logo.png";
 import { Mail } from "lucide-react";
-import { brand, categories, whatsappLink } from "@/lib/brand";
+import { brand, whatsappLink } from "@/lib/brand";
+import { useCatalog } from "@/lib/catalog-context";
 import WavyDivider from "./WavyDivider";
 import { InstagramIcon, WhatsAppIcon } from "./social-icons";
 import { Heart } from "./doodles";
 
 export default function Footer() {
+  const { categories } = useCatalog();
   return (
     <footer id="contact" className="mt-16">
       <WavyDivider color="sage" />
@@ -23,15 +27,15 @@ export default function Footer() {
                 <Image src={logo} alt={brand.name} sizes="140px" className="h-[54px] w-auto" />
               </span>
               <p className="mt-2 max-w-[240px] text-[14px] leading-relaxed">
-                Crochet toys, bags and little joys, stitched by hand in {brand.city}.
+                Crochet clothing, amigurumi and handmade joys, stitched with care in {brand.city}.
               </p>
             </div>
             <div>
               <p className="mb-3 font-hand text-[19px] tracking-wide text-cream-50">Shop</p>
               <ul className="space-y-1.5 text-[14px]">
-                {categories.slice(0, 5).map((c) => (
+                {categories.map((c) => (
                   <li key={c.slug}>
-                    <Link href={`/shop?category=${c.slug}`} className="hover:text-cream-50 hover:underline underline-offset-4">
+                    <Link href={`/${c.slug}`} className="hover:text-cream-50 hover:underline underline-offset-4">
                       {c.label}
                     </Link>
                   </li>

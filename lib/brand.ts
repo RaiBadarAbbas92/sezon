@@ -19,22 +19,72 @@ export const currency = (n: number) => `Rs. ${n.toLocaleString("en-PK")}`;
 export const whatsappLink = (text: string) =>
   `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent(text)}`;
 
-export type CategoryIcon = "rabbit" | "bag" | "flower" | "sparkles" | "baby" | "gift";
+export type CategoryIcon = "rabbit" | "bag" | "flower" | "sparkles" | "gift" | "shirt";
+
+export interface SubCategory {
+  slug: string;
+  label: string;
+}
 
 export interface Category {
   slug: string;
   label: string;
   icon: CategoryIcon;
   doodle: "heart" | "star" | "sprig" | "sparkle" | "yarn";
+  image?: string; // cover photo from Supabase `catalog_categories.image_url`
+  children: SubCategory[]; // empty for standalone sections (Bags, Amigurumi)
 }
 
+// The one and only category structure: nav, sidebar, filters, routes and supabase/seed.sql all follow it.
+// URLs are /<section> and /<section>/<sub> (e.g. /clothing/cardigans, /bags). Every slug is unique across the tree.
 export const categories: Category[] = [
-  { slug: "amigurumi", label: "Amigurumi", icon: "rabbit", doodle: "heart" },
-  { slug: "bags", label: "Bags & Totes", icon: "bag", doodle: "star" },
-  { slug: "home-decor", label: "Home Decor", icon: "flower", doodle: "sprig" },
-  { slug: "accessories", label: "Accessories", icon: "sparkles", doodle: "sparkle" },
-  { slug: "baby", label: "Baby & Kids", icon: "baby", doodle: "yarn" },
-  { slug: "gifts", label: "Gift Boxes", icon: "gift", doodle: "heart" },
+  {
+    slug: "clothing",
+    label: "Clothing",
+    icon: "shirt",
+    doodle: "heart",
+    children: [
+      { slug: "cardigans", label: "Cardigans" },
+      { slug: "pullovers-sweaters", label: "Pullovers & Sweaters" },
+      { slug: "hoodies", label: "Hoodies" },
+      { slug: "sweater-vests", label: "Sweater Vests" },
+      { slug: "shrugs-boleros", label: "Shrugs & Boleros" },
+    ],
+  },
+  {
+    slug: "accessories",
+    label: "Accessories",
+    icon: "sparkles",
+    doodle: "sparkle",
+    children: [
+      { slug: "hair-accessories", label: "Hair Accessories" },
+      { slug: "keychains", label: "Keychains" },
+      { slug: "bookmarks", label: "Bookmarks" },
+    ],
+  },
+  { slug: "bags", label: "Bags", icon: "bag", doodle: "star", children: [] },
+  {
+    slug: "home-living",
+    label: "Home & Living",
+    icon: "flower",
+    doodle: "sprig",
+    children: [
+      { slug: "cushion-covers", label: "Cushion Covers" },
+      { slug: "tissue-box-covers", label: "Tissue Box Covers" },
+      { slug: "home-decor", label: "Home Décor" },
+    ],
+  },
+  {
+    slug: "gifts",
+    label: "Gifts",
+    icon: "gift",
+    doodle: "heart",
+    children: [
+      { slug: "gift-sets", label: "Gift Sets" },
+      { slug: "custom-gifts", label: "Custom Gifts" },
+    ],
+  },
+  { slug: "amigurumi", label: "Amigurumi", icon: "rabbit", doodle: "yarn", children: [] },
 ];
 
 export const navLinks = [

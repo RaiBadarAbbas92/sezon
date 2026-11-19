@@ -18,6 +18,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Supabase (products, categories, orders)
+
+The store uses the same tables as the Bustaniya backend, so that admin panel can manage it.
+
+1. Supabase → SQL Editor: run `supabase/schema.sql`, then `supabase/seed.sql` (the category tree, retires old categories, demo crochet products).
+2. Copy `.env.example` to `.env.local` and fill in the URL + keys, then restart `npm run dev`.
+
+Without `.env.local` the store shows the local catalogue from `lib/products.ts`, and checkout runs in demo mode (no order is saved).
+Products, categories and stock come from `lib/catalog.ts`; checkout posts to `app/api/orders/route.ts`.
+
+### Categories
+
+The category structure is fixed in `lib/brand.ts` (6 sections: Clothing, Accessories, Bags, Home & Living, Gifts,
+Amigurumi, with their sub-categories). Each has a clean URL: `/clothing`, `/clothing/cardigans`, `/bags`, …
+A product's `category` is the most specific slug (`cardigans`, `bags`); `catalog_categories` only supplies cover images
+and the admin panel's dropdown options.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

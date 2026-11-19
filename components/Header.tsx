@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Heart, Menu, Search, ShoppingBasket, User, X } from "lucide-react";
-import { navLinks } from "@/lib/brand";
+import { ChevronDown, Heart, Menu, Search, ShoppingBasket, User, X } from "lucide-react";
+import { categories, navLinks } from "@/lib/brand";
 import { useCart } from "@/lib/cart";
 import Logo from "./Logo";
 import { CategoryList } from "./CategorySidebar";
@@ -47,19 +47,47 @@ export default function Header({ activeCategory }: { activeCategory?: string }) 
 
         <Logo />
 
-        <nav aria-label="Main" className="mx-auto hidden items-center gap-7 lg:flex">
-          {navLinks.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="group relative py-1 font-hand text-[16px] tracking-wide text-sage-900 transition-colors hover:text-sage-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-600 rounded-[6px]"
-            >
-              {l.label}
-              <span
-                className={`absolute -bottom-1 left-1/2 h-[3px] -translate-x-1/2 rounded-pill bg-sage-700 transition-all ${isActive(l.href) ? "w-6" : "w-0 group-hover:w-4"}`}
-              />
-            </Link>
-          ))}
+        <nav aria-label="Main" className="mx-auto hidden items-center gap-5 lg:flex xl:gap-7">
+          {categories.map((c) => {
+            const href = `/${c.slug}`;
+            return (
+              <div key={c.slug} className="group/menu relative">
+                <Link
+                  href={href}
+                  aria-haspopup={c.children.length ? "true" : undefined}
+                  className="group relative inline-flex items-center gap-1 py-1 font-hand text-[16px] tracking-wide text-sage-900 transition-colors hover:text-sage-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-600 rounded-[6px]"
+                >
+                  {c.label}
+                  {c.children.length > 0 && (
+                    <ChevronDown size={15} strokeWidth={1.8} className="transition-transform group-hover/menu:rotate-180" />
+                  )}
+                  <span
+                    className={`absolute -bottom-1 left-1/2 h-[3px] -translate-x-1/2 rounded-pill bg-sage-700 transition-all ${isActive(href) ? "w-6" : "w-0 group-hover:w-4"}`}
+                  />
+                </Link>
+                {c.children.length > 0 && (
+                  <div className="invisible absolute left-1/2 top-full z-40 -translate-x-1/2 pt-3 opacity-0 transition-all group-hover/menu:visible group-hover/menu:opacity-100 group-focus-within/menu:visible group-focus-within/menu:opacity-100">
+                    <ul className="min-w-[210px] rounded-[20px] bg-cream-50 p-2 shadow-lift ring-1 ring-sage-900/5">
+                      {c.children.map((s) => {
+                        const subHref = `${href}/${s.slug}`;
+                        return (
+                          <li key={s.slug}>
+                            <Link
+                              href={subHref}
+                              aria-current={pathname === subHref ? "page" : undefined}
+                              className={`block rounded-pill px-4 py-2 font-hand text-[15px] tracking-wide text-sage-900 transition-colors hover:bg-sage-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sage-600 ${pathname === subHref ? "bg-sage-100" : ""}`}
+                            >
+                              {s.label}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
         <div className="ml-auto flex items-center gap-1 lg:ml-0">
@@ -146,7 +174,7 @@ export default function Header({ activeCategory }: { activeCategory?: string }) 
               </Link>
             ))}
           </nav>
-          <CategoryList active={activeCategory} onNavigate={() => setOpen(false)} />
+          <CategoryList active={activeCategory} onNavigate={() => setOpen(false)} expandAll />
           <div className="mt-auto flex items-end justify-between px-3 pt-8 text-cream-100">
             <HandwrittenAside>handmade with love &lt;3</HandwrittenAside>
             <Sprig size={34} />

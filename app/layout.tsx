@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Fredoka, Gochi_Hand, Nunito } from "next/font/google";
 import { CartProvider } from "@/lib/cart";
+import { CatalogProvider } from "@/lib/catalog-context";
+import { getCatalog } from "@/lib/catalog";
 import { brand } from "@/lib/brand";
 import "./globals.css";
 
@@ -10,14 +12,18 @@ const nunito = Nunito({ variable: "--font-nunito", weight: ["400", "500", "600",
 
 export const metadata: Metadata = {
   title: `${brand.name} — ${brand.tagline}`,
-  description: "Handmade crochet toys, bags, decor and gifts — stitched slowly with love and delivered across Pakistan.",
+  description:
+    "Handmade crochet clothing, accessories, bags, home pieces, gifts and amigurumi — stitched with love and delivered across Pakistan.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const catalog = await getCatalog();
   return (
     <html lang="en" className={`${gochi.variable} ${fredoka.variable} ${nunito.variable}`}>
       <body className="antialiased">
-        <CartProvider>{children}</CartProvider>
+        <CatalogProvider catalog={catalog}>
+          <CartProvider>{children}</CartProvider>
+        </CatalogProvider>
       </body>
     </html>
   );

@@ -1,45 +1,73 @@
+"use client";
+
 import Link from "next/link";
-import { Baby, Flower2, Gift, Rabbit, ShoppingBag, Sparkles, type LucideIcon } from "lucide-react";
-import { categories, type CategoryIcon } from "@/lib/brand";
+import { useCatalog } from "@/lib/catalog-context";
+import { findCategory } from "@/lib/categories";
+import { categoryIcons } from "./categoryIcons";
 import { Sprig, YarnBall } from "./doodles";
 import { HandwrittenAside } from "./PinnedNote";
 
-export const categoryIcons: Record<CategoryIcon, LucideIcon> = {
-  rabbit: Rabbit,
-  bag: ShoppingBag,
-  flower: Flower2,
-  sparkles: Sparkles,
-  baby: Baby,
-  gift: Gift,
-};
+const item = (active: boolean) =>
+  `flex items-center gap-3 rounded-pill px-4 py-2.5 font-hand text-[17px] tracking-wide text-cream-50 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream-100 ${active ? "bg-white/15" : ""}`;
 
-export function CategoryList({ active, onNavigate }: { active?: string; onNavigate?: () => void }) {
+const subItem = (active: boolean) =>
+  `block rounded-pill py-1.5 pl-12 pr-4 font-hand text-[15px] tracking-wide text-cream-100 transition-colors hover:bg-white/10 hover:text-cream-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream-100 ${active ? "bg-white/15 text-cream-50" : ""}`;
+
+/** `active` is a section or sub-category slug ("all" for Shop all). The active section shows its sub-categories. */
+export function CategoryList({
+  active,
+  onNavigate,
+  expandAll,
+}: {
+  active?: string;
+  onNavigate?: () => void;
+  expandAll?: boolean; // mobile drawer: show every section's sub-categories
+}) {
+  const { categories } = useCatalog();
+  const hit = findCategory(active, categories);
   return (
     <ul className="space-y-1">
       <li>
-        <Link
-          href="/shop"
-          onClick={onNavigate}
-          className={`flex items-center gap-3 rounded-pill px-4 py-2.5 font-hand text-[17px] tracking-wide text-cream-50 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream-100 ${active === "all" ? "bg-white/15" : ""}`}
-        >
+        <Link href="/shop" onClick={onNavigate} className={item(active === "all")}>
           <YarnBall size={20} strokeWidth={2} />
           Shop all
         </Link>
       </li>
       {categories.map((c) => {
         const Icon = categoryIcons[c.icon];
-        const isActive = active === c.slug;
+        const current = hit?.section.slug === c.slug;
+        const open = expandAll || current;
+        const isActive = current && !hit?.sub;
         return (
           <li key={c.slug}>
             <Link
-              href={`/shop?category=${c.slug}`}
+              href={`/${c.slug}`}
               onClick={onNavigate}
               aria-current={isActive ? "page" : undefined}
-              className={`flex items-center gap-3 rounded-pill px-4 py-2.5 font-hand text-[17px] tracking-wide text-cream-50 transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cream-100 ${isActive ? "bg-white/15" : ""}`}
+              className={item(isActive)}
             >
               <Icon size={19} strokeWidth={1.6} />
               {c.label}
             </Link>
+            {open && c.children.length > 0 && (
+              <ul className="mt-1 space-y-0.5">
+                {c.children.map((s) => {
+                  const subActive = hit?.sub?.slug === s.slug;
+                  return (
+                    <li key={s.slug}>
+                      <Link
+                        href={`/${c.slug}/${s.slug}`}
+                        onClick={onNavigate}
+                        aria-current={subActive ? "page" : undefined}
+                        className={subItem(subActive)}
+                      >
+                        {s.label}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </li>
         );
       })}
