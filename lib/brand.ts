@@ -9,7 +9,7 @@ export const brand = {
   email: "hello@sezon.pk",
   city: "Lahore, Pakistan",
   maker: {
-    name: "Sana",
+    name: "Mihab",
     note: "Every stitch is counted, every piece is checked twice — I hope it makes you smile.",
   },
 };

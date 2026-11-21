@@ -38,7 +38,7 @@ const EVENT_COLORS = {
   ViewContent: { background: "#f5f0ff", color: "#6546a8" },
   AddToCart: { background: "#fff4e6", color: "#a65d13" },
   InitiateCheckout: { background: "#fff8dc", color: "#86620b" },
-  Purchase: { background: "#e8f6ed", color: "#17663d" },
+  Purchase: { background: "#FBF7F0", color: "#5F7350" },
 };
 
 function formatMoney(value, currency = "PKR") {
@@ -69,7 +69,7 @@ function safeNumber(value, fallback = 0) {
 }
 
 function EventBadge({ name }) {
-  const palette = EVENT_COLORS[name] || { background: "#f2f5f3", color: "#405a4c" };
+  const palette = EVENT_COLORS[name] || { background: "#FBF7F0", color: "#4E6142" };
   return (
     <span className="eventsWorkspaceBadge" style={palette}>
       {name || "Unknown"}
@@ -177,7 +177,7 @@ function Overview({ analytics, counts, health, onSettings }) {
           {funnel.map(([label, value, eventName], index) => (
             <div className="eventsWorkspaceFunnelStep" key={label}>
               <div className="eventsWorkspaceFunnelTop"><span>{label}</span><strong>{safeNumber(value).toLocaleString("en-PK")}</strong></div>
-              <div className="eventsWorkspaceFunnelTrack"><i style={{ width: `${Math.max(5, (safeNumber(value) / maxFunnel) * 100)}%`, background: EVENT_COLORS[eventName]?.color || "#17663d" }} /></div>
+              <div className="eventsWorkspaceFunnelTrack"><i style={{ width: `${Math.max(5, (safeNumber(value) / maxFunnel) * 100)}%`, background: EVENT_COLORS[eventName]?.color || "#5F7350" }} /></div>
               <small>{index === 0 ? "100% of visitors" : `${safeNumber(value) && safeNumber(funnel[index - 1][1]) ? Math.round((safeNumber(value) / safeNumber(funnel[index - 1][1])) * 100) : 0}% from previous step`}</small>
             </div>
           ))}

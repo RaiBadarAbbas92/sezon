@@ -1,5 +1,6 @@
 // Admin styles come from the original admin panel and are only loaded on /admin.
 import "./admin.css";
+import "./sezon-theme.css";
 
 export const metadata = {
   title: "Sezon Admin",

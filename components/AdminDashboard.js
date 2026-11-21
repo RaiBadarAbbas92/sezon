@@ -15,11 +15,11 @@ import { apparelSizes, fashionColors } from "../data/variantOptions";
 import AdminLogin from "./AdminLogin";
 
 const HOMEPAGE_COLOR_OPTIONS = [
-  { name: "Ivory", value: "#fffefb" }, { name: "Cream", value: "#f7f2e8" }, { name: "White", value: "#ffffff" },
+  { name: "Ivory", value: "#FFFDF9" }, { name: "Cream", value: "#f7f2e8" }, { name: "White", value: "#ffffff" },
   { name: "Blush", value: "#f8e8e8" }, { name: "Rose", value: "#e9b9bd" }, { name: "Sand", value: "#e8dcc8" },
-  { name: "Sage", value: "#dce8d8" }, { name: "Sky", value: "#dcebf2" }, { name: "Lavender", value: "#e6def2" },
-  { name: "Forest", value: "#173d29" }, { name: "Dark Green", value: "#132f22" }, { name: "Olive", value: "#536b43" },
-  { name: "Berry", value: "#8d2449" }, { name: "Dark Red", value: "#bd194b" }, { name: "Gold", value: "#d4af37" },
+  { name: "Sage", value: "#F5EEE3" }, { name: "Sky", value: "#dcebf2" }, { name: "Lavender", value: "#e6def2" },
+  { name: "Forest", value: "#4E6142" }, { name: "Dark Green", value: "#34442E" }, { name: "Olive", value: "#5F7350" },
+  { name: "Berry", value: "#8d2449" }, { name: "Dark Red", value: "#B8614E" }, { name: "Gold", value: "#d4af37" },
   { name: "Charcoal", value: "#252b28" }, { name: "Black", value: "#000000" },
 ];
 
@@ -133,7 +133,7 @@ function VisualBars({ title, subtitle, items = [], format = (value) => value, co
             <div className="visualBarRow" key={`${item.label}-${index}`}>
               <div className="barInfo">
                 <div className="barLabelGroup">
-                  <i className="barDot" style={{ background: item.color || "#1d6840" }} />
+                  <i className="barDot" style={{ background: item.color || "#5F7350" }} />
                   <span className="barLabel">{item.label}</span>
                 </div>
                 <div className="barValues">
@@ -142,7 +142,7 @@ function VisualBars({ title, subtitle, items = [], format = (value) => value, co
                 </div>
               </div>
               <div className="barTrack">
-                <i style={{ "--bar-width": `${width}%`, "--bar-color": item.color || "#1d6840" }} />
+                <i style={{ "--bar-width": `${width}%`, "--bar-color": item.color || "#5F7350" }} />
               </div>
             </div>
           );
@@ -181,7 +181,7 @@ function VisualDonut({ title, subtitle, items = [], centerLabel = "", centerValu
           <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="svgDonut">
             <circle
               cx={size / 2} cy={size / 2} r={radius}
-              fill="none" stroke="#edf2ed" strokeWidth={strokeWidth}
+              fill="none" stroke="#F5EEE3" strokeWidth={strokeWidth}
             />
             {total > 0 && validItems.map((item, index) => {
               const val = Number(item.value || 0);
@@ -196,7 +196,7 @@ function VisualDonut({ title, subtitle, items = [], centerLabel = "", centerValu
                   key={index}
                   cx={size / 2} cy={size / 2} r={radius}
                   fill="none"
-                  stroke={item.color || "#1d6840"}
+                  stroke={item.color || "#5F7350"}
                   strokeWidth={strokeWidth}
                   strokeDasharray={`${dashLen} ${gapLen}`}
                   strokeDashoffset={offset}
@@ -218,7 +218,7 @@ function VisualDonut({ title, subtitle, items = [], centerLabel = "", centerValu
             return (
               <div key={`${item.label}-${index}`} className="legendItem">
                 <div className="legendLabelGroup">
-                  <i style={{ background: item.color || "#1d6840" }} />
+                  <i style={{ background: item.color || "#5F7350" }} />
                   <span>{item.label}</span>
                 </div>
                 <div className="legendValueGroup">
@@ -226,7 +226,7 @@ function VisualDonut({ title, subtitle, items = [], centerLabel = "", centerValu
                   <b>{item.value}</b>
                 </div>
                 <div className="legendMiniTrack">
-                  <div className="legendMiniFill" style={{ width: `${percent}%`, background: item.color || "#1d6840" }} />
+                  <div className="legendMiniFill" style={{ width: `${percent}%`, background: item.color || "#5F7350" }} />
                 </div>
               </div>
             );
@@ -238,7 +238,7 @@ function VisualDonut({ title, subtitle, items = [], centerLabel = "", centerValu
   );
 }
 
-function VisualProgress({ label, value, helper, color = "#1d6840" }) {
+function VisualProgress({ label, value, helper, color = "#5F7350" }) {
   return <div className="visualProgress">
     <div><span>{label}</span><b>{clampPercent(value)}%</b></div>
     <i><em style={{ width: `${clampPercent(value)}%`, background: color }} /></i>
@@ -588,13 +588,13 @@ function ExecutiveAnalyticsSuite({
               label="COGS Ratio (Cost of Goods)"
               value={cogsPercent}
               helper={`Rs. ${dashboardCogs.toLocaleString()} product sourcing cost`}
-              color="#c78b2b"
+              color="#B98C5E"
             />
             <VisualProgress
               label="Logistics, Tax &amp; Courier Loss Ratio"
               value={logisticsPercent}
               helper={`Rs. ${(dashboardCourierCost + dashboardTaxes + dashboardReturnPostexLoss).toLocaleString()} PostEx & tax fees`}
-              color="#b73543"
+              color="#A94B3B"
             />
           </div>
         </article>
@@ -662,7 +662,7 @@ function ExecutiveAnalyticsSuite({
                     </div>
                   </div>
                   <div className="analyticsRankedTrack">
-                    <div className="analyticsRankedFill" style={{ width: `${pct}%`, background: "linear-gradient(90deg, #4777a8, #2a5280)" }} />
+                    <div className="analyticsRankedFill" style={{ width: `${pct}%`, background: "linear-gradient(90deg, #7D93A8, #2a5280)" }} />
                   </div>
                 </div>
               );
@@ -682,7 +682,7 @@ function ExecutiveAnalyticsSuite({
               <h3>Shopify-Style Conversion Funnel</h3>
               <p>Customer journey funnel from page views to completed orders.</p>
             </div>
-            <span className="analyticsMetricBadge" style={{ background: "#edf5ee", color: "#173d29" }}>Conversion Funnel</span>
+            <span className="analyticsMetricBadge" style={{ background: "#F5EEE3", color: "#4E6142" }}>Conversion Funnel</span>
           </div>
 
           {pixelFunnel ? (() => {
@@ -694,19 +694,19 @@ function ExecutiveAnalyticsSuite({
                   label="1. Store Visitors & Sessions (PageViews)"
                   value={100}
                   helper={`${c.PageView || 0} page views logged`}
-                  color="#16452c"
+                  color="#4E6142"
                 />
                 <VisualProgress
                   label="2. Added to Cart (AddToCart)"
                   value={Math.min(100, Math.round(((c.AddToCart || 0) / base) * 100))}
                   helper={`${c.AddToCart || 0} product add-to-cart actions`}
-                  color="#2e7d32"
+                  color="#5F7350"
                 />
                 <VisualProgress
                   label="3. Reached Checkout (InitiateCheckout)"
                   value={Math.min(100, Math.round(((c.InitiateCheckout || 0) / base) * 100))}
                   helper={`${c.InitiateCheckout || 0} checkout sessions initiated`}
-                  color="#c78b2b"
+                  color="#B98C5E"
                 />
                 <VisualProgress
                   label="4. Completed Orders (Purchase Conversion)"
@@ -727,31 +727,31 @@ function ExecutiveAnalyticsSuite({
               <h3>Meta Pixel &amp; Conversions API (CAPI) Status</h3>
               <p>Real-time server event tracking &amp; EMQ match status (last 7 days).</p>
             </div>
-            <span className="analyticsMetricBadge" style={{ background: "#e8f5e9", color: "#2e7d32" }}>Browser + Server</span>
+            <span className="analyticsMetricBadge" style={{ background: "#FBF7F0", color: "#5F7350" }}>Browser + Server</span>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "12px" }}>
-            <div style={{ padding: "10px 14px", borderRadius: "8px", background: "#f8faf9", border: "1px solid #e0e8e3", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ padding: "10px 14px", borderRadius: "8px", background: "#f8faf9", border: "1px solid #F5EEE3", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
-                <b style={{ color: "#173d29", fontSize: "13px" }}>Events sent</b>
+                <b style={{ color: "#4E6142", fontSize: "13px" }}>Events sent</b>
                 <div style={{ fontSize: "12px", color: "#6b7280" }}>{pixelFunnel ? pixelFunnel.total : "…"} total pixel/CAPI events logged</div>
               </div>
-              <span style={{ fontSize: "11px", fontWeight: 700, color: "#2e7d32", padding: "3px 8px", background: "#e8f5e9", borderRadius: "12px" }}>Live</span>
+              <span style={{ fontSize: "11px", fontWeight: 700, color: "#5F7350", padding: "3px 8px", background: "#FBF7F0", borderRadius: "12px" }}>Live</span>
             </div>
 
-            <div style={{ padding: "10px 14px", borderRadius: "8px", background: "#f8faf9", border: "1px solid #e0e8e3", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ padding: "10px 14px", borderRadius: "8px", background: "#f8faf9", border: "1px solid #F5EEE3", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
-                <b style={{ color: "#173d29", fontSize: "13px" }}>Meta delivery success rate</b>
+                <b style={{ color: "#4E6142", fontSize: "13px" }}>Meta delivery success rate</b>
                 <div style={{ fontSize: "12px", color: "#6b7280" }}>Share of events Meta's Graph API accepted (HTTP 200)</div>
               </div>
-              <span style={{ fontSize: "11px", fontWeight: 700, color: pixelFunnel?.successRate >= 90 || pixelFunnel?.successRate == null ? "#2e7d32" : "#c0392b", padding: "3px 8px", background: pixelFunnel?.successRate >= 90 || pixelFunnel?.successRate == null ? "#e8f5e9" : "#fdecea", borderRadius: "12px" }}>
+              <span style={{ fontSize: "11px", fontWeight: 700, color: pixelFunnel?.successRate >= 90 || pixelFunnel?.successRate == null ? "#5F7350" : "#c0392b", padding: "3px 8px", background: pixelFunnel?.successRate >= 90 || pixelFunnel?.successRate == null ? "#FBF7F0" : "#fdecea", borderRadius: "12px" }}>
                 {pixelFunnel?.successRate == null ? "—" : `${pixelFunnel.successRate}%`}
               </span>
             </div>
 
-            <div style={{ padding: "10px 14px", borderRadius: "8px", background: "#f8faf9", border: "1px solid #e0e8e3", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div style={{ padding: "10px 14px", borderRadius: "8px", background: "#f8faf9", border: "1px solid #F5EEE3", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
-                <b style={{ color: "#173d29", fontSize: "13px" }}>SHA-256 EMQ match rate</b>
+                <b style={{ color: "#4E6142", fontSize: "13px" }}>SHA-256 EMQ match rate</b>
                 <div style={{ fontSize: "12px", color: "#6b7280" }}>Events sent with hashed email/phone for Meta match quality</div>
               </div>
               <span style={{ fontSize: "11px", fontWeight: 700, color: "#1565c0", padding: "3px 8px", background: "#e3f2fd", borderRadius: "12px" }}>
@@ -762,7 +762,7 @@ function ExecutiveAnalyticsSuite({
             <button
               type="button"
               onClick={() => setActive("Events")}
-              style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "10px", borderRadius: "8px", background: "#16452c", color: "#fff", fontWeight: 700, fontSize: "13px", border: "none", cursor: "pointer", marginTop: "4px" }}
+              style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "10px", borderRadius: "8px", background: "#4E6142", color: "#fff", fontWeight: 700, fontSize: "13px", border: "none", cursor: "pointer", marginTop: "4px" }}
             >
               View Live Events in Admin →
             </button>
@@ -1837,7 +1837,7 @@ export default function AdminDashboard() {
                   <button type="button" onClick={() => removeProductMedia(item.id)} aria-label={`Remove ${item.name}`}><X /></button>
                 </div>)}
               </div>}
-              <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: "1px solid #e2e8e3" }}>
+              <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: "1px solid #F5EEE3" }}>
                 <label>
                   Instagram Reel / Video URL (optional)
                   <input
@@ -2197,7 +2197,7 @@ function DashboardHome({ setActive, orders, products, metrics, connected, loadin
     else if (status === "Total Orders") statusBuckets.Unbooked += 1;
     else statusBuckets.Booked += 1;
   });
-  const statusPalette = { Booked: "#2563eb", Unbooked: "#f59e0b", Attempted: "#8b5cf6", Delivered: "#10b981", Returned: "#ef4444", Cancelled: "#6b7280" };
+  const statusPalette = { Booked: "#7D93A8", Unbooked: "#C9A27A", Attempted: "#8b5cf6", Delivered: "#6E7766", Returned: "#ef4444", Cancelled: "#6b7280" };
   const statusEntries = Object.entries(statusBuckets).filter(([, count]) => count > 0);
   let completedPercent = 0;
   const donutStops = statusEntries.map(([label, count]) => {
@@ -2325,7 +2325,7 @@ function DashboardHome({ setActive, orders, products, metrics, connected, loadin
 
     {/* Secondary KPI Badges Row */}
     <div className="premiumMetricGrid" style={{ marginTop: '-8px', marginBottom: '24px', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
-      <div className="statusBadge confirmed" style={{ padding: '10px 16px', justifyContent: 'center', background: '#f0f7f3', color: '#1a5f38', borderColor: '#d3ebd9', borderRadius: '12px', fontSize: '12px' }}>
+      <div className="statusBadge confirmed" style={{ padding: '10px 16px', justifyContent: 'center', background: '#FBF7F0', color: '#4E6142', borderColor: '#F5EEE3', borderRadius: '12px', fontSize: '12px' }}>
         Last {chartRange} days AOV: <b style={{ marginLeft: '4px' }}>Rs. {averageOrderValue.toLocaleString()}</b>
       </div>
       <div className="statusBadge activeStatus" style={{ padding: '10px 16px', justifyContent: 'center', background: '#f0f4f8', color: '#1b4d7c', borderColor: '#d2e3f0', borderRadius: '12px', fontSize: '12px' }}>
@@ -2348,7 +2348,7 @@ function DashboardHome({ setActive, orders, products, metrics, connected, loadin
           subtitle="All tracked orders by live courier fulfilment status."
           centerValue={dashboardOrderCount}
           centerLabel="total"
-          items={Object.entries(statusBuckets).map(([label, value]) => ({ label, value, color: statusPalette[label] || "#8aa08f" })).filter((item) => item.value > 0)}
+          items={Object.entries(statusBuckets).map(([label, value]) => ({ label, value, color: statusPalette[label] || "#A9B79A" })).filter((item) => item.value > 0)}
         />
       </div>
 
@@ -2359,10 +2359,10 @@ function DashboardHome({ setActive, orders, products, metrics, connected, loadin
           subtitle="Finance P&L: how delivered sales flow into product costs, courier deductions and net profit."
           format={(value) => `Rs. ${Math.round(Number(value || 0)).toLocaleString()}`}
           items={[
-            { label: "Gross sales", value: dashboardSales, color: "#10b981" },
-            { label: "Product cost (COGS)", value: dashboardCogs, color: "#f59e0b" },
+            { label: "Gross sales", value: dashboardSales, color: "#6E7766" },
+            { label: "Product cost (COGS)", value: dashboardCogs, color: "#C9A27A" },
             { label: "PostEx & logistics", value: dashboardCourierCost + dashboardTaxes + dashboardReturnPostexLoss, color: "#ef4444" },
-            { label: "Net profit", value: Math.max(0, dashboardNetProfit), color: "#3b82f6" },
+            { label: "Net profit", value: Math.max(0, dashboardNetProfit), color: "#8FA3B6" },
           ]}
         />
       </div>
@@ -2693,15 +2693,15 @@ function ProductsPanel({ products, search, setSearch, onAdd, onEdit, onDelete, o
   const activeCount = nonArchivedProducts.filter((p) => productStatus(p) === "Active").length;
   const archivedCount = products.filter((p) => productStatus(p) === "Archived").length;
   const productStatusVisual = [
-    { label: "Active", value: activeCount, color: "#1d6840" },
+    { label: "Active", value: activeCount, color: "#5F7350" },
     { label: "Low stock", value: lowStockCount, color: "#d08a18" },
-    { label: "Missing cost", value: missingCostCount, color: "#b73543" },
-    { label: "Archived", value: archivedCount, color: "#8aa08f" },
+    { label: "Missing cost", value: missingCostCount, color: "#A94B3B" },
+    { label: "Archived", value: archivedCount, color: "#A9B79A" },
   ].filter((item) => item.value > 0);
   const collectionVisual = collections.slice(0, 6).map((collection, index) => ({
     label: collection,
     value: products.filter((product) => productCollection(product) === collection).length,
-    color: ["#1d6840", "#4777a8", "#c78b2b", "#8d2449", "#6c7b43", "#7d5ba6"][index] || "#1d6840",
+    color: ["#5F7350", "#7D93A8", "#B98C5E", "#8d2449", "#5F7350", "#7d5ba6"][index] || "#5F7350",
   }));
 
   function exportProducts() {
@@ -3367,7 +3367,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
               </div>
               <div style="text-align:right;">
                 <span class="barLabel">Order ID</span>
-                <b class="barValue" style="color:#166534;">${escapeHtml(order.id)}</b>
+                <b class="barValue" style="color:#5F7350;">${escapeHtml(order.id)}</b>
               </div>
             </div>
 
@@ -3444,9 +3444,9 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
 
         <div class="manifestSummary" style="grid-template-columns: repeat(3, 1fr);">
           <div class="statBox"><span>Total Selected Orders</span><b>${orders.length} Orders</b></div>
-          <div class="statBox" style="background:#ecfdf5;border-color:#a7f3d0;">
-            <span style="color:#065f46;">Total Production Suits</span>
-            <b style="color:#065f46;font-size:20px;">${totalSuits} Suits</b>
+          <div class="statBox" style="background:#FBF7F0;border-color:#E2D8C5;">
+            <span style="color:#4E6142;">Total Production Suits</span>
+            <b style="color:#4E6142;font-size:20px;">${totalSuits} Suits</b>
           </div>
           <div class="statBox">
             <span>Production Master</span>
@@ -3494,12 +3494,12 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
       return `<tr>
         <td style="text-align:center;">${idx + 1}</td>
         <td><b>${escapeHtml(o.id)}</b><br/><small style="color:#64748b;">${escapeHtml(o.date || "")}</small></td>
-        <td><b>${escapeHtml(o.customer)}</b><br/><small style="color:#2563eb;">📞 ${escapeHtml(o.phone || "")}</small></td>
+        <td><b>${escapeHtml(o.customer)}</b><br/><small style="color:#7D93A8;">📞 ${escapeHtml(o.phone || "")}</small></td>
         <td><b>${escapeHtml(o.city || "—")}</b><br/><small style="color:#475569;font-size:11px;">${escapeHtml(o.address || "")}</small></td>
         <td style="font-size:12px;">${itemsText}</td>
         <td><b>${escapeHtml(o.deliveryMethod || "PostEx")}</b>${o.tracking ? `<br/><code style="background:#f1f5f9;padding:2px 4px;border-radius:3px;font-size:11px;">${escapeHtml(o.tracking)}</code>` : ""}</td>
         <td style="text-align:right;">Rs. ${adv.toLocaleString()}</td>
-        <td style="text-align:right;font-weight:bold;color:#166534;">Rs. ${cod.toLocaleString()}</td>
+        <td style="text-align:right;font-weight:bold;color:#5F7350;">Rs. ${cod.toLocaleString()}</td>
       </tr>`;
     }).join("");
 
@@ -3520,9 +3520,9 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
           <div class="statBox"><span>Selected Orders</span><b>${orders.length}</b></div>
           <div class="statBox"><span>Total Order Value</span><b>Rs. ${totalValue.toLocaleString()}</b></div>
           <div class="statBox"><span>Advance Paid</span><b>Rs. ${totalAdvance.toLocaleString()}</b></div>
-          <div class="statBox" style="background:#ecfdf5;border-color:#a7f3d0;">
-            <span style="color:#065f46;">Total COD To Collect</span>
-            <b style="color:#065f46;font-size:18px;">Rs. ${totalCod.toLocaleString()}</b>
+          <div class="statBox" style="background:#FBF7F0;border-color:#E2D8C5;">
+            <span style="color:#4E6142;">Total COD To Collect</span>
+            <b style="color:#4E6142;font-size:18px;">Rs. ${totalCod.toLocaleString()}</b>
           </div>
         </div>
 
@@ -3546,7 +3546,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
             <tr style="background:#f8fafc;font-weight:bold;">
               <td colspan="6" style="text-align:right;">GRAND TOTAL:</td>
               <td style="text-align:right;">Rs. ${totalAdvance.toLocaleString()}</td>
-              <td style="text-align:right;color:#166534;font-size:15px;">Rs. ${totalCod.toLocaleString()}</td>
+              <td style="text-align:right;color:#5F7350;font-size:15px;">Rs. ${totalCod.toLocaleString()}</td>
             </tr>
           </tfoot>
         </table>
@@ -3590,10 +3590,10 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
             <div>
               <h1>Sezon</h1>
               <p style="margin:2px 0 0 0;font-size:12px;color:#64748b;">Luxury Ready to Wear · Official Store</p>
-              <p style="margin:4px 0 0 0;font-size:12px;color:#166534;font-weight:bold;letter-spacing:0.05em;">${isCompact ? "📦 WAREHOUSE PACKING SLIP" : "📄 CUSTOMER INVOICE / ORDER RECEIPT"}</p>
+              <p style="margin:4px 0 0 0;font-size:12px;color:#5F7350;font-weight:bold;letter-spacing:0.05em;">${isCompact ? "📦 WAREHOUSE PACKING SLIP" : "📄 CUSTOMER INVOICE / ORDER RECEIPT"}</p>
             </div>
             <div style="text-align:right;">
-              <h2 style="margin:0;color:#173d29;font-size:22px;">${escapeHtml(order.id)}</h2>
+              <h2 style="margin:0;color:#4E6142;font-size:22px;">${escapeHtml(order.id)}</h2>
               <p style="margin:2px 0;font-size:12px;color:#64748b;">Date: ${escapeHtml(order.date || "")}</p>
               <p style="margin:2px 0;font-size:12px;color:#334155;"><b>Status:</b> ${escapeHtml(order.postexStatus || order.status || "Confirmed")}</p>
               <span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;background:#f1f5f9;color:#334155;">
@@ -3606,7 +3606,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
             <div class="infoBox">
               <b>Customer Information</b>
               <p style="margin:6px 0 2px 0;font-size:14px;font-weight:bold;color:#0f172a;">${escapeHtml(order.customer)}</p>
-              <p style="margin:2px 0;font-size:13px;color:#2563eb;">📞 ${escapeHtml(order.phone || "No phone")}</p>
+              <p style="margin:2px 0;font-size:13px;color:#7D93A8;">📞 ${escapeHtml(order.phone || "No phone")}</p>
               ${order.email ? `<p style="margin:2px 0;font-size:12px;color:#64748b;">✉️ ${escapeHtml(order.email)}</p>` : ""}
             </div>
             <div class="infoBox">
@@ -3614,7 +3614,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
               <p style="margin:6px 0 2px 0;font-size:13px;color:#0f172a;"><b>📍 City:</b> ${escapeHtml(order.city || "—")}</p>
               <p style="margin:2px 0;font-size:12px;color:#475569;line-height:1.4;">${escapeHtml(order.address || "No address provided")}</p>
               <p style="margin:4px 0 0 0;font-size:12px;"><b>Delivery via:</b> ${escapeHtml(order.deliveryMethod || "PostEx")}</p>
-              ${order.tracking ? `<p style="margin:2px 0 0 0;font-size:12px;color:#166534;font-weight:bold;">🚚 Tracking #: ${escapeHtml(order.tracking)}</p>` : ""}
+              ${order.tracking ? `<p style="margin:2px 0 0 0;font-size:12px;color:#5F7350;font-weight:bold;">🚚 Tracking #: ${escapeHtml(order.tracking)}</p>` : ""}
             </div>
           </div>
 
@@ -3640,11 +3640,11 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
                   <span>Total Order Value:</span><span>Rs. ${total.toLocaleString()}</span>
                 </div>
                 ${advance > 0 ? `
-                  <div style="color:#166534;font-weight:600;">
+                  <div style="color:#5F7350;font-weight:600;">
                     <span>Advance Payment Received:</span><span>- Rs. ${advance.toLocaleString()}</span>
                   </div>
                 ` : ""}
-                <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;padding:8px 10px;margin-top:8px;font-size:15px;font-weight:bold;color:#166534;">
+                <div style="background:#FBF7F0;border:1px solid #F5EEE3;border-radius:6px;padding:8px 10px;margin-top:8px;font-size:15px;font-weight:bold;color:#5F7350;">
                   <span>COD Amount to Pay:</span>
                   <span>${cod === 0 ? "PAID IN ADVANCE (Rs. 0)" : `Rs. ${cod.toLocaleString()}`}</span>
                 </div>
@@ -3786,7 +3786,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
             display: inline-block;
             margin-left: 8px;
             font-size: 12px;
-            color: #2563eb;
+            color: #7D93A8;
             font-weight: 600;
           }
           .slipArticlesList {
@@ -3915,7 +3915,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            border-bottom: 2px solid #173d29;
+            border-bottom: 2px solid #4E6142;
             padding-bottom: 14px;
             margin-bottom: 16px;
           }
@@ -3924,7 +3924,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
             font-size: 26px;
             font-weight: 800;
             letter-spacing: 0.04em;
-            color: #173d29;
+            color: #4E6142;
           }
           .gridTwo {
             display: grid;
@@ -4007,14 +4007,14 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
           .manifestHeader {
             display: flex;
             justify-content: space-between;
-            border-bottom: 2px solid #173d29;
+            border-bottom: 2px solid #4E6142;
             padding-bottom: 12px;
             margin-bottom: 16px;
           }
           .manifestHeader h1 {
             margin: 0;
             font-size: 24px;
-            color: #173d29;
+            color: #4E6142;
           }
           .manifestHeader p {
             margin: 2px 0 0 0;
@@ -4075,7 +4075,7 @@ function generateBulkOrdersPdf({ orders = [], type = "stitching" }) {
             z-index: 9999;
           }
           .printBtn {
-            background: #166534;
+            background: #5F7350;
             color: #fff;
             border: none;
             padding: 9px 20px;
@@ -4241,7 +4241,7 @@ function OrdersPanel({ rows, products, pagination, canExport, currentAdminUser, 
   const orderStatusVisual = orderStatusCounts.filter((item) => item.label !== "Total Orders" && item.count > 0).map((item) => ({
     label: item.label,
     value: item.count,
-    color: item.label === "Delivered" ? "#10b981" : item.label === "Booked" ? "#2563eb" : item.label === "Unbooked" ? "#f59e0b" : item.label === "Attempted" ? "#8b5cf6" : item.label === "Returned" ? "#ef4444" : item.label === "Cancelled" ? "#6b7280" : "#3b82f6",
+    color: item.label === "Delivered" ? "#6E7766" : item.label === "Booked" ? "#7D93A8" : item.label === "Unbooked" ? "#C9A27A" : item.label === "Attempted" ? "#8b5cf6" : item.label === "Returned" ? "#ef4444" : item.label === "Cancelled" ? "#6b7280" : "#8FA3B6",
   }));
   // Delivered only: the chart is labelled "delivered order value", and counting
   // cancelled and returned parcels here inflated every city's revenue.
@@ -4252,7 +4252,7 @@ function OrdersPanel({ rows, products, pagination, canExport, currentAdminUser, 
   }, {})).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([label, value], index) => ({
     label,
     value,
-    color: ["#1d6840", "#4777a8", "#c78b2b", "#8d2449", "#6c7b43", "#7d5ba6"][index] || "#1d6840",
+    color: ["#5F7350", "#7D93A8", "#B98C5E", "#8d2449", "#5F7350", "#7d5ba6"][index] || "#5F7350",
   }));
 
   function updateLocalOrder(orderId, changes) {
@@ -4442,7 +4442,7 @@ function OrdersPanel({ rows, products, pagination, canExport, currentAdminUser, 
             padding: "8px 14px",
             fontSize: "13px",
             fontWeight: 700,
-            color: "#0f766e",
+            color: "#5F7350",
             cursor: syncingPostex ? "not-allowed" : "pointer"
           }}
           title="Query PostEx tracking API for live status changes on all active parcels"
@@ -4675,16 +4675,16 @@ function CourierOperationsPanel() {
   const inTransit = snapshot.shipments.filter((shipment) => ["booked", "picked_up", "in_transit", "out_for_delivery", "attempted", "on_hold"].includes(shipment.courier_normalized_status)).length;
   const syncableRows = rows.filter((shipment) => shipment.provider === "postex" && shipment.courier_tracking_number).length;
   const courierStatusVisual = [
-    { label: "In process", value: inTransit, color: "#4777a8" },
-    { label: "Delivered", value: delivered, color: "#1d6840" },
+    { label: "In process", value: inTransit, color: "#7D93A8" },
+    { label: "Delivered", value: delivered, color: "#5F7350" },
     { label: "Delayed", value: delayed, color: "#d08a18" },
-    { label: "Sync failed", value: failed, color: "#b73543" },
+    { label: "Sync failed", value: failed, color: "#A94B3B" },
   ].filter((item) => item.value > 0);
   const courierProviderVisual = Object.entries(snapshot.shipments.reduce((map, shipment) => {
     const key = shipment.courierName || shipment.provider || "Manual";
     map[key] = (map[key] || 0) + 1;
     return map;
-  }, {})).map(([label, value], index) => ({ label, value, color: ["#1d6840", "#4777a8", "#c78b2b", "#8d2449"][index] || "#1d6840" }));
+  }, {})).map(([label, value], index) => ({ label, value, color: ["#5F7350", "#7D93A8", "#B98C5E", "#8d2449"][index] || "#5F7350" }));
   const statusLabel = (status) => String(status || "unassigned").replaceAll("_", " ");
   const issueLabel = (shipment) => {
     if (shipment.courier_sync_error) return shipment.courier_sync_error;
@@ -5038,17 +5038,17 @@ function FinancePanel({ orders, products, connected, currentAdminUser }) {
   const marketingSalesTotal = marketingCampaigns.reduce((sum, item) => sum + Number(item.sales || 0), 0);
   const marketingCustomersTotal = marketingCampaigns.reduce((sum, item) => sum + Number(item.customers || 0), 0);
   const financeCashVisual = [
-    { label: "Available cash", value: Math.max(0, availableCash), color: "#1d6840" },
-    { label: "PostEx receivable", value: receivables, color: "#4777a8" },
-    { label: "Owner funds", value: ownerInvestments, color: "#6c7b43" },
-    { label: "Withdrawals", value: ownerWithdrawals, color: "#b73543" },
+    { label: "Available cash", value: Math.max(0, availableCash), color: "#5F7350" },
+    { label: "PostEx receivable", value: receivables, color: "#7D93A8" },
+    { label: "Owner funds", value: ownerInvestments, color: "#5F7350" },
+    { label: "Withdrawals", value: ownerWithdrawals, color: "#A94B3B" },
   ].filter((item) => item.value > 0);
   const financeCostVisual = [
-    { label: "Sales", value: grossRevenue, color: "#1d6840" },
-    { label: "COGS", value: deliveredCogs, color: "#c78b2b" },
-    { label: "PostEx costs", value: courierDeliveryCost + returnCourierCost + gstTaxTotal, color: "#b73543" },
+    { label: "Sales", value: grossRevenue, color: "#5F7350" },
+    { label: "COGS", value: deliveredCogs, color: "#B98C5E" },
+    { label: "PostEx costs", value: courierDeliveryCost + returnCourierCost + gstTaxTotal, color: "#A94B3B" },
     { label: "Operating expenses", value: profitExpenseTotal, color: "#8d2449" },
-    { label: "Net profit", value: Math.max(0, netProfit), color: "#4777a8" },
+    { label: "Net profit", value: Math.max(0, netProfit), color: "#7D93A8" },
   ].filter((item) => item.value > 0);
 
   async function addMarketingCampaign(event) { event.preventDefault(); const formElement = event.currentTarget; const data = new FormData(formElement); const next = [{ id: `campaign-${Date.now()}`, name: String(data.get("name") || "").trim(), platform: data.get("platform") || "Other", spend: Number(data.get("spend") || 0), sales: Number(data.get("sales") || 0), customers: Number(data.get("customers") || 0), date: data.get("date") || today }, ...marketingCampaigns]; if (!next[0].name) return; setCashbookLoading(true); try { const response = await fetch("/api/admin/finance-transactions", { method:"PATCH", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ transactions:cashbookTransactions, allocation:profitAllocation, supplierBills, fixedCosts:Number(fixedCosts||0), marketingCampaigns:next }) }); const result = await response.json(); if (!response.ok) throw new Error(result.error || "Unable to save campaign."); setMarketingCampaigns(result.marketingCampaigns || next); formElement?.reset(); } catch (error) { setCashbookError(error.message); } finally { setCashbookLoading(false); } }
@@ -5824,7 +5824,7 @@ function FinancePanel({ orders, products, connected, currentAdminUser }) {
       <article><ShoppingBag /><span><b>{money(courierDeliveryCost)}</b>Courier delivery cost</span></article>
       <article><WalletCards /><span><b>{money(availableCash)}</b>Available business cash</span></article>
       <article><Landmark /><span><b>{money(receivedCash)}</b>Manually verified PostEx receipts</span></article>
-      {totalCustomerAdvance > 0 && <article><CircleDollarSign /><span><b style={{ color: "#15803d" }}>{money(totalCustomerAdvance)}</b>Customer advance recorded</span></article>}
+      {totalCustomerAdvance > 0 && <article><CircleDollarSign /><span><b style={{ color: "#5F7350" }}>{money(totalCustomerAdvance)}</b>Customer advance recorded</span></article>}
       <article><CircleDollarSign /><span><b>{money(otherBusinessIncome)}</b>Other business income</span></article>
       <article><CircleDollarSign /><span><b>{money(ownerInvestments)}</b>Owner funds added</span></article>
       <article className={ownerWithdrawals ? "alertMetric" : ""}><CircleDollarSign /><span><b>{money(ownerWithdrawals)}</b>Owner withdrawals</span></article>
@@ -5845,7 +5845,7 @@ function FinancePanel({ orders, products, connected, currentAdminUser }) {
         <div className="cardHeading"><div><h2>Where money comes from</h2><p>Only verified bank entries increase Available Cash.</p></div></div>
         <div className="financeStatement">
           <div><span>Manually verified PostEx receipts</span><b>+ {money(receivedCash)}</b></div>
-          {totalCustomerAdvance > 0 && <div><span>Customer advance recorded (orders)</span><b style={{ color: "#15803d" }}>{money(totalCustomerAdvance)}</b></div>}
+          {totalCustomerAdvance > 0 && <div><span>Customer advance recorded (orders)</span><b style={{ color: "#5F7350" }}>{money(totalCustomerAdvance)}</b></div>}
           <div><span>Other recorded business income</span><b>+ {money(otherBusinessIncome)}</b></div>
           <div><span>Owner funds added</span><b>+ {money(ownerInvestments)}</b></div>
           {cashResetAdjustment > 0 && <div><span>Opening balance adjustment</span><b>+ {money(cashResetAdjustment)}</b></div>}
@@ -5874,7 +5874,7 @@ function FinancePanel({ orders, products, connected, currentAdminUser }) {
           <h2>🟢 Customer Advance Receipts</h2>
           <span>All advance confirmation fees (e.g. Rs. 250) and prepaid order payments recorded for customers.</span>
         </div>
-        <b style={{ color: "#15803d", fontSize: "16px" }}>
+        <b style={{ color: "#5F7350", fontSize: "16px" }}>
           Total Advance: {money(totalCustomerAdvance)}
         </b>
       </div>
@@ -5906,7 +5906,7 @@ function FinancePanel({ orders, products, connected, currentAdminUser }) {
                   <td><b>{refNum}</b></td>
                   <td>{custCity}</td>
                   <td className="incomeAmount"><b>+ {money(advance)}</b></td>
-                  <td style={{ color: cod === 0 ? "#15803d" : "#1e40af", fontWeight: 700 }}>
+                  <td style={{ color: cod === 0 ? "#5F7350" : "#1e40af", fontWeight: 700 }}>
                     {cod === 0 ? "Rs. 0 (Prepaid)" : money(cod)}
                   </td>
                   <td>
@@ -6076,9 +6076,9 @@ function FinancePanel({ orders, products, connected, currentAdminUser }) {
         subtitle="Period summary — revenue, costs and outstanding payables."
         format={(value) => money(value)}
         items={[
-          { label: "Delivered revenue", value: grossRevenue, color: "#1d6840" },
-          { label: "Product cost (COGS)", value: deliveredCogs, color: "#c78b2b" },
-          { label: "PostEx & courier fees", value: courierDeliveryCost + returnCourierCost + gstTaxTotal, color: "#b73543" },
+          { label: "Delivered revenue", value: grossRevenue, color: "#5F7350" },
+          { label: "Product cost (COGS)", value: deliveredCogs, color: "#B98C5E" },
+          { label: "PostEx & courier fees", value: courierDeliveryCost + returnCourierCost + gstTaxTotal, color: "#A94B3B" },
           { label: "Supplier payables", value: supplierPayableTotal, color: "#8d2449" },
         ]}
       />
@@ -6120,12 +6120,12 @@ function ProductionBatchModal({ isOpen, onClose, onSubmit, products, saving }) {
         </label>
 
         {productId === "__new__" && (
-          <section className="adminCard" style={{ padding: "14px", marginBottom: "12px", background: "#f9fcfa", border: "1px solid #dce7dd" }}>
-            <p className="fieldTitle" style={{ fontWeight: "700", color: "#132f22" }}>New product / design details</p>
+          <section className="adminCard" style={{ padding: "14px", marginBottom: "12px", background: "#FBF7F0", border: "1px solid #E6DDCC" }}>
+            <p className="fieldTitle" style={{ fontWeight: "700", color: "#34442E" }}>New product / design details</p>
             <div className="formRow">
               <label>Design Code / SKU (e.g. SZ-301)
                 <input name="newProductArticleNumber" placeholder="e.g. SZ-301" />
-                <small style={{ color: "#546e5f", fontSize: "11px", display: "block", marginTop: "2px" }}>Same code dubara use karne par stock &amp; cost update hogi (no duplicates).</small>
+                <small style={{ color: "#5F7350", fontSize: "11px", display: "block", marginTop: "2px" }}>Same code dubara use karne par stock &amp; cost update hogi (no duplicates).</small>
               </label>
               <label>Product / design name
                 <input name="newProductName" placeholder="e.g. Blue Arora – Design 4" />
@@ -6154,7 +6154,7 @@ function ProductionBatchModal({ isOpen, onClose, onSubmit, products, saving }) {
           </label>
         </div>
 
-        <p className="fieldTitle" style={{ fontWeight: "700", color: "#132f22", marginTop: "12px" }}>Costs for this design batch (PKR)</p>
+        <p className="fieldTitle" style={{ fontWeight: "700", color: "#34442E", marginTop: "12px" }}>Costs for this design batch (PKR)</p>
         <div className="formRow">
           <label>Fabric cost
             <input name="fabric" type="number" min="0" value={fabric} onChange={(e) => setFabric(e.target.value)} />
@@ -6180,14 +6180,14 @@ function ProductionBatchModal({ isOpen, onClose, onSubmit, products, saving }) {
           </label>
         </div>
 
-        <div className="adminCard" style={{ padding: "12px 16px", margin: "14px 0", background: "linear-gradient(135deg, #173d29, #245d3f)", color: "#fff", borderRadius: "12px" }}>
+        <div className="adminCard" style={{ padding: "12px 16px", margin: "14px 0", background: "linear-gradient(135deg, #4E6142, #5F7350)", color: "#fff", borderRadius: "12px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
             <span style={{ fontSize: "12px", opacity: 0.9 }}>Total Batch Cost:</span>
             <b style={{ fontSize: "15px" }}>Rs. {totalCost.toLocaleString()}</b>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.2)", paddingTop: "6px" }}>
             <span style={{ fontSize: "13px", fontWeight: "700" }}>Unit Cost per Suit:</span>
-            <b style={{ fontSize: "18px", color: "#aef3c7" }}>Rs. {unitCost.toLocaleString()} / suit</b>
+            <b style={{ fontSize: "18px", color: "#F5EEE3" }}>Rs. {unitCost.toLocaleString()} / suit</b>
           </div>
         </div>
 
@@ -6465,15 +6465,15 @@ function InventoryPanel({ products, movements, orders, connected, currentAdminUs
   }, 0);
   const healthyStockCount = products.filter((product) => Number(product.stock || 0) > Number(product.lowStockThreshold || 5)).length;
   const inventoryStockVisual = [
-    { label: "Healthy", value: healthyStockCount, color: "#1d6840" },
+    { label: "Healthy", value: healthyStockCount, color: "#5F7350" },
     { label: "Low", value: low, color: "#d08a18" },
-    { label: "Out", value: out, color: "#b73543" },
+    { label: "Out", value: out, color: "#A94B3B" },
   ].filter((item) => item.value > 0);
   const inventoryValueVisual = [
-    { label: "Stock cost value", value: stockCostValue, color: "#1d6840" },
-    { label: "COGS sold", value: cogsSold, color: "#4777a8" },
-    { label: "Stock purchase cash", value: stockPurchaseCash, color: "#c78b2b" },
-    { label: "Restock cash required", value: restockCashRequired, color: "#b73543" },
+    { label: "Stock cost value", value: stockCostValue, color: "#5F7350" },
+    { label: "COGS sold", value: cogsSold, color: "#7D93A8" },
+    { label: "Stock purchase cash", value: stockPurchaseCash, color: "#B98C5E" },
+    { label: "Restock cash required", value: restockCashRequired, color: "#A94B3B" },
   ].filter((item) => item.value > 0);
   const skuProfitRows = products.map((product) => {
     const soldItems = deliveredHistoricalOrders.flatMap((order) => normalizeOrderItems(order.raw || order)).filter((item) => String(item.productId) === String(product.id));
@@ -7161,18 +7161,18 @@ function DraftOrderDialog({ products = [], onClose, onCreate, saving = false }) 
 
         <input type="hidden" name="itemsJson" value={JSON.stringify(preparedItems)} />
 
-        <div className="adminCard" style={{ padding: "14px", marginBottom: "12px", background: "#f0fdf4", border: "1px solid #bbf7d0" }}>
+        <div className="adminCard" style={{ padding: "14px", marginBottom: "12px", background: "#FBF7F0", border: "1px solid #F5EEE3" }}>
           <div className="formRow" style={{ marginBottom: "6px" }}>
             <span>Products Subtotal: <b>Rs. {productSubtotal.toLocaleString()}</b></span>
             <span>Delivery: <b>{deliveryFee ? `Rs. ${deliveryFee.toLocaleString()}` : "Free"}</b></span>
           </div>
           <div className="formRow" style={{ marginBottom: "6px" }}>
-            <span style={{ color: "#15803d" }}>Advance Received: <b>Rs. {amountPayableInAdvance.toLocaleString()}</b></span>
-            <span style={{ color: amountPayableOnDelivery === 0 ? "#15803d" : "#1e40af" }}>
+            <span style={{ color: "#5F7350" }}>Advance Received: <b>Rs. {amountPayableInAdvance.toLocaleString()}</b></span>
+            <span style={{ color: amountPayableOnDelivery === 0 ? "#5F7350" : "#1e40af" }}>
               Pay on Delivery (COD): <b>Rs. {amountPayableOnDelivery.toLocaleString()}</b>
             </span>
           </div>
-          <div style={{ fontSize: "15px", fontWeight: 700, color: "#166534", borderTop: "1px solid #dcfce7", paddingTop: "6px" }}>
+          <div style={{ fontSize: "15px", fontWeight: 700, color: "#5F7350", borderTop: "1px solid #FBF7F0", paddingTop: "6px" }}>
             Total Order Value: Rs. {orderTotal.toLocaleString()}
           </div>
         </div>
@@ -7541,19 +7541,19 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
     const slip = window.open("", "_blank", "width=760,height=900");
     if (!slip) return;
     slip.document.write(`<!doctype html><html><head><title>${escapePrintText(title)} ${escapePrintText(order.id)}</title><style>
-      body{font-family:Arial,sans-serif;margin:0;color:#173d29;background:#fff}
+      body{font-family:Arial,sans-serif;margin:0;color:#4E6142;background:#fff}
       main{padding:32px}
-      header{display:flex;justify-content:space-between;gap:24px;border-bottom:2px solid #173d29;padding-bottom:18px;margin-bottom:22px}
+      header{display:flex;justify-content:space-between;gap:24px;border-bottom:2px solid #4E6142;padding-bottom:18px;margin-bottom:22px}
       h1{margin:0;font-size:28px;letter-spacing:.02em}
-      p{margin:4px 0;color:#59675d;line-height:1.45}
-      .box{border:1px solid #dfe7df;border-radius:10px;padding:16px;margin:14px 0}
+      p{margin:4px 0;color:#5F7350;line-height:1.45}
+      .box{border:1px solid #F5EEE3;border-radius:10px;padding:16px;margin:14px 0}
       .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
       table{width:100%;border-collapse:collapse;margin-top:18px}
-      th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#59675d;border-bottom:1px solid #dfe7df;padding:10px}
-      td{border-bottom:1px solid #eef2ee;padding:12px 10px;vertical-align:top}
-      td small{display:block;color:#6b766e;margin-top:4px}
+      th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#5F7350;border-bottom:1px solid #F5EEE3;padding:10px}
+      td{border-bottom:1px solid #F5EEE3;padding:12px 10px;vertical-align:top}
+      td small{display:block;color:#5F7350;margin-top:4px}
       .total{margin-left:auto;max-width:320px}
-      .total div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eef2ee}
+      .total div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #F5EEE3}
       .total b{font-size:18px}
       @media print{button{display:none} main{padding:20px}}
     </style></head><body><main>
@@ -7620,7 +7620,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
               onClick={() => saveChanges()}
               disabled={saving}
               style={{
-                background: "#166534",
+                background: "#5F7350",
                 color: "#fff",
                 border: "none",
                 fontWeight: 700,
@@ -7651,7 +7651,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
           <section className="adminCard orderDetailCard" style={{ padding: "18px", background: "#fff" }}>
             <div className="inventoryListHead" style={{ marginBottom: "10px" }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: "15px", fontWeight: 700, color: "#173d29" }}>Customer &amp; Delivery Details</h3>
+                <h3 style={{ margin: 0, fontSize: "15px", fontWeight: 700, color: "#4E6142" }}>Customer &amp; Delivery Details</h3>
                 <span style={{ fontSize: "12px", color: "#64748b" }}>Shipping and direct contact options</span>
               </div>
               <div style={{ display: "flex", gap: "6px" }}>
@@ -7664,7 +7664,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                       display: "inline-flex",
                       alignItems: "center",
                       gap: "4px",
-                      background: "#22c55e",
+                      background: "#A9B79A",
                       color: "#fff",
                       padding: "6px 12px",
                       borderRadius: "6px",
@@ -7898,14 +7898,14 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
           <section className="adminCard orderItemsCard" style={{ padding: "18px", background: "#fff" }}>
             <div className="inventoryListHead" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
               <div>
-                <h2 style={{ fontSize: "16px", margin: 0, fontWeight: 700, color: "#173d29" }}>Ordered Items &amp; Product Settings</h2>
+                <h2 style={{ fontSize: "16px", margin: 0, fontWeight: 700, color: "#4E6142" }}>Ordered Items &amp; Product Settings</h2>
                 <span style={{ fontSize: "12px", color: "#64748b" }}>Change products, sizes, colors, or quantities and save directly</span>
               </div>
               <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
                 <button
                   type="button"
                   onClick={handleAddProductItem}
-                  style={{ background: "#f0fdf4", color: "#166534", border: "1px solid #bbf7d0", fontWeight: 700, padding: "7px 12px", fontSize: "12px", borderRadius: "6px", cursor: "pointer" }}
+                  style={{ background: "#FBF7F0", color: "#5F7350", border: "1px solid #F5EEE3", fontWeight: 700, padding: "7px 12px", fontSize: "12px", borderRadius: "6px", cursor: "pointer" }}
                 >
                   + Add Product to Order
                 </button>
@@ -7915,7 +7915,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                   onClick={() => saveChanges({ items: orderItems })}
                   disabled={saving}
                   style={{
-                    background: "#166534",
+                    background: "#5F7350",
                     color: "#fff",
                     border: "none",
                     fontWeight: 700,
@@ -7997,7 +7997,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                                 value={item.name || item.title || ""}
                                 onChange={(e) => updateItemField(index, "name", e.target.value)}
                                 placeholder="Enter custom suit / product title..."
-                                style={{ padding: "5px 8px", fontSize: "12px", borderRadius: "4px", border: "1.5px solid #2563eb", background: "#fff", fontWeight: 600 }}
+                                style={{ padding: "5px 8px", fontSize: "12px", borderRadius: "4px", border: "1.5px solid #7D93A8", background: "#fff", fontWeight: 600 }}
                               />
                             )}
                           </div>
@@ -8085,7 +8085,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
             <div style={{ marginTop: "12px", display: "flex", justifyContent: "flex-end", gap: "16px", fontSize: "13px", color: "#334155", borderTop: "1px solid #f1f5f9", paddingTop: "10px" }}>
               <span>Items Subtotal: <b>Rs. {calculatedItemsTotal.toLocaleString()}</b></span>
               <span>Delivery Charges: <b>Rs. {deliveryChargeVal.toLocaleString()}</b></span>
-              <span style={{ color: "#166534", fontWeight: 700 }}>Total Order Value: <b>Rs. {calculatedOrderTotal.toLocaleString()}</b></span>
+              <span style={{ color: "#5F7350", fontWeight: 700 }}>Total Order Value: <b>Rs. {calculatedOrderTotal.toLocaleString()}</b></span>
             </div>
           </section>
 
@@ -8106,8 +8106,8 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
               <span>Product Subtotal: <b>Rs. {calculatedItemsTotal.toLocaleString()}</b></span>
               <span>Delivery Charges: <b>Rs. {deliveryChargeVal.toLocaleString()}</b></span>
               <span>Total Order Value: <b>Rs. {calculatedOrderTotal.toLocaleString()}</b></span>
-              <span style={{ color: "#15803d" }}>Advance Received: <b>Rs. {currentAdvance.toLocaleString()}</b></span>
-              <span style={{ color: currentCod === 0 ? "#15803d" : "#1e40af" }}>
+              <span style={{ color: "#5F7350" }}>Advance Received: <b>Rs. {currentAdvance.toLocaleString()}</b></span>
+              <span style={{ color: currentCod === 0 ? "#5F7350" : "#1e40af" }}>
                 PostEx COD Collection: <b>{currentCod === 0 ? "Rs. 0 (Prepaid)" : `Rs. ${currentCod.toLocaleString()}`}</b>
               </span>
             </div>
@@ -8167,7 +8167,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                 <button
                   type="button"
                   className="editProductButton"
-                  style={{ fontSize: "11px", padding: "6px 10px", background: "#f0fdf4", color: "#166534", border: "1px solid #bbf7d0" }}
+                  style={{ fontSize: "11px", padding: "6px 10px", background: "#FBF7F0", color: "#5F7350", border: "1px solid #F5EEE3" }}
                   onClick={() => {
                     setAdvancePaidAmount(calculatedOrderTotal);
                     setPaymentStatus("Payment Verified");
@@ -8291,7 +8291,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                   href={`https://postex.pk/tracking?cn=${tracking}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: "#2563eb", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}
+                  style={{ color: "#7D93A8", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "4px" }}
                 >
                   🔗 Open live tracking page on PostEx.pk
                 </a>
@@ -8306,7 +8306,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                   onClick={bookWithPostex}
                   disabled={saving || bookingPostex}
                   style={{
-                    background: "#2563eb",
+                    background: "#7D93A8",
                     color: "#fff",
                     border: "none",
                     fontWeight: 700,
@@ -8333,7 +8333,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                     onClick={checkLivePostexStatus}
                     disabled={saving || checkingPostex}
                     style={{
-                      background: "#0f766e",
+                      background: "#5F7350",
                       color: "#fff",
                       border: "none",
                       fontWeight: 700,
@@ -8389,9 +8389,9 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                       }}
                       disabled={saving || checkingPostex}
                       style={{
-                        background: "#f0fdf4",
-                        color: "#166534",
-                        border: "1px solid #bbf7d0",
+                        background: "#FBF7F0",
+                        color: "#5F7350",
+                        border: "1px solid #F5EEE3",
                         fontWeight: 700,
                         display: "inline-flex",
                         alignItems: "center",
@@ -8422,7 +8422,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                       ↩️ Mark as Unbooked (At Warehouse)
                     </button>
                   ) : (
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "#dcfce7", color: "#166534", padding: "6px 12px", borderRadius: "6px", fontWeight: 700, fontSize: "12px" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "4px", background: "#FBF7F0", color: "#5F7350", padding: "6px 12px", borderRadius: "6px", fontWeight: 700, fontSize: "12px" }}>
                       ✅ Delivered to Customer
                     </span>
                   )}
@@ -8510,7 +8510,7 @@ function OrderDetailDrawer({ order, catalogProducts = [], onClose, onUpdate, can
                 <h3 style={{ margin: 0, fontSize: "15px" }}>Meta Pixel &amp; Conversions API (CAPI)</h3>
                 <span style={{ fontSize: "12px", color: "#64748b" }}>Conversion tracking and event deduplication</span>
               </div>
-              <span className="statusBadge activeStatus" style={{ background: "#dcfce7", color: "#166534" }}>
+              <span className="statusBadge activeStatus" style={{ background: "#FBF7F0", color: "#5F7350" }}>
                 CAPI Linked
               </span>
             </div>
@@ -8907,7 +8907,7 @@ function OrderTable({
                                 alignSelf: "flex-start",
                                 background: "none",
                                 border: "none",
-                                color: "#0f766e",
+                                color: "#5F7350",
                                 fontWeight: 700,
                                 cursor: "pointer",
                                 fontSize: "12px",
@@ -9044,12 +9044,12 @@ function CustomersPanel({ orders, onOpen }) {
   const segmentVisual = segments.filter((item) => item !== "All").map((item, index) => ({
     label: item,
     value: customers.filter((customer) => (customer.tags || []).includes(item)).length,
-    color: ["#1d6840", "#4777a8", "#c78b2b", "#8d2449"][index] || "#1d6840",
+    color: ["#5F7350", "#7D93A8", "#B98C5E", "#8d2449"][index] || "#5F7350",
   })).filter((item) => item.value > 0);
   const spendVisual = customers.slice().sort((a, b) => Number(b.totalSpent || 0) - Number(a.totalSpent || 0)).slice(0, 6).map((customer, index) => ({
     label: customer.name,
     value: Number(customer.totalSpent || 0),
-    color: ["#1d6840", "#4777a8", "#c78b2b", "#8d2449", "#6c7b43", "#7d5ba6"][index] || "#1d6840",
+    color: ["#5F7350", "#7D93A8", "#B98C5E", "#8d2449", "#5F7350", "#7d5ba6"][index] || "#5F7350",
   }));
 
   function updateCustomer(customerId, changes) {
@@ -9173,9 +9173,9 @@ function BackendHealthPanel() {
       <div className="adminVisualGrid">
         <section className="adminVisualCard">
           <div className="adminVisualHead"><div><h3>Readiness score</h3><p>Backend connectivity, module readiness and security coverage.</p></div></div>
-          <VisualProgress label="Backend health" value={(Number(summary.ok || 0) / healthTotal) * 100} helper={`${summary.ok || 0} passing · ${summary.warning || 0} warnings · ${summary.fail || 0} failed`} color="#1d6840" />
-          <VisualProgress label="Feature completeness" value={(Number(completenessSummary.complete || 0) / completenessTotal) * 100} helper={`${completenessSummary.complete || 0} of ${completenessTotal} modules complete`} color="#4777a8" />
-          <VisualProgress label="Security checks" value={(Number(securitySummary.ok || 0) / securityTotal) * 100} helper={`${securitySummary.ok || 0} of ${securityTotal} checks secure`} color="#287a4c" />
+          <VisualProgress label="Backend health" value={(Number(summary.ok || 0) / healthTotal) * 100} helper={`${summary.ok || 0} passing · ${summary.warning || 0} warnings · ${summary.fail || 0} failed`} color="#5F7350" />
+          <VisualProgress label="Feature completeness" value={(Number(completenessSummary.complete || 0) / completenessTotal) * 100} helper={`${completenessSummary.complete || 0} of ${completenessTotal} modules complete`} color="#7D93A8" />
+          <VisualProgress label="Security checks" value={(Number(securitySummary.ok || 0) / securityTotal) * 100} helper={`${securitySummary.ok || 0} of ${securityTotal} checks secure`} color="#5F7350" />
         </section>
         <VisualDonut
           title="Backend status split"
@@ -9183,9 +9183,9 @@ function BackendHealthPanel() {
           centerValue={summary.ok || 0}
           centerLabel="passing"
           items={[
-            { label: "OK", value: summary.ok || 0, color: "#1d6840" },
+            { label: "OK", value: summary.ok || 0, color: "#5F7350" },
             { label: "Warning", value: summary.warning || 0, color: "#d08a18" },
-            { label: "Fail", value: summary.fail || 0, color: "#b73543" },
+            { label: "Fail", value: summary.fail || 0, color: "#A94B3B" },
           ]}
         />
       </div>
@@ -9923,12 +9923,12 @@ function SettingsPanel({ onOpen, signedInUser, initialTab = "" }) {
             <div className="sectionColorGrid">
               {HOMEPAGE_COLOR_SECTIONS.map((section) => {
                 const selectedBg = storeSettings.sectionColors?.[section.key] || DEFAULT_STORE_SETTINGS.sectionColors[section.key];
-                const selectedText = storeSettings.sectionTextColors?.[section.key] || DEFAULT_STORE_SETTINGS.sectionTextColors?.[section.key] || "#173d29";
+                const selectedText = storeSettings.sectionTextColors?.[section.key] || DEFAULT_STORE_SETTINGS.sectionTextColors?.[section.key] || "#4E6142";
                 return (
                   <div className="sectionColorOption" key={section.key}>
                     <div className="sectionColorHeader">
                       <b>{section.label}</b>
-                      <span className="badgePreview" style={{ background: selectedBg, color: selectedText, border: "1px solid #d5ddd3" }}>Preview Text</span>
+                      <span className="badgePreview" style={{ background: selectedBg, color: selectedText, border: "1px solid #E2D8C5" }}>Preview Text</span>
                     </div>
 
                     <div className="colorControlBlock">
@@ -9944,7 +9944,7 @@ function SettingsPanel({ onOpen, signedInUser, initialTab = "" }) {
                       </div>
                     </div>
 
-                    <div className="colorControlBlock" style={{ marginTop: "8px", paddingTop: "8px", borderTop: "1px dashed #e0e6df" }}>
+                    <div className="colorControlBlock" style={{ marginTop: "8px", paddingTop: "8px", borderTop: "1px dashed #F5EEE3" }}>
                       <div className="colorLabelRow">
                         <label>Text Color</label>
                         <div className="hexInputRow">
@@ -10005,8 +10005,8 @@ function SettingsPanel({ onOpen, signedInUser, initialTab = "" }) {
           <div className="adminVisualGrid">
             <section className="adminVisualCard">
               <div className="adminVisualHead"><div><h3>Payment readiness</h3><p>Enabled methods and operational safeguards.</p></div></div>
-              <VisualProgress label="COD flow" value={storeSettings.paymentSettings?.codEnabled !== false ? 100 : 0} helper={storeSettings.paymentSettings?.codEnabled !== false ? "COD is active at checkout" : "COD is currently disabled"} color="#1d6840" />
-              <VisualProgress label="Full advance payment" value={storeSettings.paymentSettings?.manualTransferEnabled !== false ? 100 : 0} helper="Customer pays the complete product subtotal before confirmation." color="#4777a8" />
+              <VisualProgress label="COD flow" value={storeSettings.paymentSettings?.codEnabled !== false ? 100 : 0} helper={storeSettings.paymentSettings?.codEnabled !== false ? "COD is active at checkout" : "COD is currently disabled"} color="#5F7350" />
+              <VisualProgress label="Full advance payment" value={storeSettings.paymentSettings?.manualTransferEnabled !== false ? 100 : 0} helper="Customer pays the complete product subtotal before confirmation." color="#7D93A8" />
             </section>
             <VisualDonut
               title="Payment methods"
@@ -10014,8 +10014,8 @@ function SettingsPanel({ onOpen, signedInUser, initialTab = "" }) {
               centerValue={[storeSettings.paymentSettings?.codEnabled !== false, storeSettings.paymentSettings?.manualTransferEnabled !== false].filter(Boolean).length}
               centerLabel="enabled"
               items={[
-                { label: "COD", value: storeSettings.paymentSettings?.codEnabled !== false ? 1 : 0, color: "#1d6840" },
-                { label: "Full advance", value: storeSettings.paymentSettings?.manualTransferEnabled !== false ? 1 : 0, color: "#4777a8" },
+                { label: "COD", value: storeSettings.paymentSettings?.codEnabled !== false ? 1 : 0, color: "#5F7350" },
+                { label: "Full advance", value: storeSettings.paymentSettings?.manualTransferEnabled !== false ? 1 : 0, color: "#7D93A8" },
               ]}
             />
           </div>
@@ -10270,9 +10270,9 @@ function SettingsPanel({ onOpen, signedInUser, initialTab = "" }) {
             <label>Google Analytics measurement ID (GA4)<input value={storeSettings.domainSettings?.analyticsMeasurementId || ""} onChange={(event) => updateSettingsGroup("domainSettings", { analyticsMeasurementId: event.target.value })} placeholder="G-..." /></label>
           </div>
           <label>Meta Conversions API (CAPI) Access Token<textarea rows="4" value={storeSettings.domainSettings?.metaCapiAccessToken || ""} onChange={(event) => updateSettingsGroup("domainSettings", { metaCapiAccessToken: event.target.value })} placeholder="EAAN... (Paste your Meta System User Access Token here)" style={{ fontFamily: "monospace", fontSize: "12px" }} /></label>
-          <div style={{ background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: "8px", padding: "12px 16px", marginTop: "12px" }}>
-            <div style={{ fontWeight: 600, color: "#166534", marginBottom: "4px" }}>🎯 Active Standard Events:</div>
-            <div style={{ fontSize: "13px", color: "#15803d", lineHeight: 1.5 }}>
+          <div style={{ background: "#FBF7F0", border: "1px solid #F5EEE3", borderRadius: "8px", padding: "12px 16px", marginTop: "12px" }}>
+            <div style={{ fontWeight: 600, color: "#5F7350", marginBottom: "4px" }}>🎯 Active Standard Events:</div>
+            <div style={{ fontSize: "13px", color: "#5F7350", lineHeight: 1.5 }}>
               • <b>PageView</b> (All page loads)<br />
               • <b>ViewContent</b> (Product details page)<br />
               • <b>AddToCart</b> (When product added to bag)<br />
@@ -10305,7 +10305,7 @@ function SettingsPanel({ onOpen, signedInUser, initialTab = "" }) {
               type="button"
               onClick={testCapiConnection}
               disabled={capiTesting}
-              style={{ background: "#2563eb", color: "#fff", borderColor: "#1d4ed8" }}
+              style={{ background: "#7D93A8", color: "#fff", borderColor: "#1d4ed8" }}
             >
               {capiTesting ? "Testing CAPI..." : "⚡ Test Meta CAPI Connection"}
             </button>
@@ -10319,7 +10319,7 @@ function SettingsPanel({ onOpen, signedInUser, initialTab = "" }) {
             </a>
           </div>
           {capiTestResult && (
-            <div style={{ marginTop: "12px", padding: "12px 16px", borderRadius: "8px", background: capiTestResult.success ? "#f0fdf4" : "#fef2f2", border: `1px solid ${capiTestResult.success ? "#bbf7d0" : "#fecaca"}`, color: capiTestResult.success ? "#166534" : "#991b1b", fontSize: "13px", fontWeight: 500 }}>
+            <div style={{ marginTop: "12px", padding: "12px 16px", borderRadius: "8px", background: capiTestResult.success ? "#FBF7F0" : "#fef2f2", border: `1px solid ${capiTestResult.success ? "#F5EEE3" : "#fecaca"}`, color: capiTestResult.success ? "#5F7350" : "#991b1b", fontSize: "13px", fontWeight: 500 }}>
               {capiTestResult.message}
             </div>
           )}

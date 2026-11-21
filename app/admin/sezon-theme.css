@@ -1,0 +1,300 @@
+/* Sezon look for the admin panel — same tokens and shapes as the storefront (app/globals.css):
+   cream page, rounded sage sidebar, Gochi Hand headings + nav, Fredoka numbers, pill buttons, soft cards.
+   Loaded after admin.css (app/admin/layout.js); every rule is scoped under .adminShell / admin classes. */
+
+.adminShell {
+  --admin-ink: #34442e;
+  --admin-muted: #6e7766;
+  --admin-subtle: #f5eee3;
+  --admin-line: #e6ddcc;
+  --admin-surface: #fffdf9;
+  --admin-danger: #a94b3b;
+  --sz-sage-900: #34442e;
+  --sz-sage-700: #4e6142;
+  --sz-sage-600: #5f7350;
+  --sz-sage-300: #a9b79a;
+  --sz-sage-100: #e4eadb;
+  --sz-cream-50: #fbf7f0;
+  --sz-cream-100: #f5eee3;
+  --sz-cream-200: #ece1d0;
+  --sz-blush-100: #f8e6e1;
+  --sz-wood: #c9a27a;
+  --sz-shadow-soft: 0 6px 20px -8px rgba(52, 68, 46, 0.18);
+  --sz-shadow-lift: 0 14px 30px -12px rgba(52, 68, 46, 0.28);
+  background: var(--sz-cream-50) !important;
+  color: var(--admin-ink);
+}
+
+/* ---- Sidebar: the storefront's rounded sage category panel ---- */
+.adminShell .adminSidebar {
+  background: var(--sz-sage-700) !important;
+  border-radius: 0 28px 28px 0;
+  box-shadow: var(--sz-shadow-lift);
+}
+.adminShell .adminNavItem > p {
+  color: var(--sz-sage-100);
+  opacity: 0.75;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+.adminShell .adminSidebar nav a {
+  border-radius: 999px;
+  color: var(--sz-cream-50);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.adminShell .adminSidebar nav a.active {
+  background: rgba(251, 247, 240, 0.18);
+  border-color: transparent;
+  box-shadow: none;
+  color: #fff;
+}
+.adminShell .adminSidebar nav a:hover {
+  background: rgba(251, 247, 240, 0.12);
+  color: #fff;
+}
+.adminShell .adminSidebar nav a b {
+  background: var(--sz-blush-100);
+  color: var(--sz-sage-900);
+  font-family: var(--font-numeric);
+}
+
+/* ---- Top bar ---- */
+.adminShell .adminTopbar {
+  background: rgba(251, 247, 240, 0.92);
+  border-bottom: 1px solid var(--admin-line);
+  box-shadow: none;
+}
+.adminShell .adminSearch {
+  border-radius: 999px;
+  background: var(--sz-cream-100);
+  border-color: var(--admin-line);
+}
+
+/* ---- Page titles + section headings in the hand-drawn font ---- */
+.adminShell .adminTitle h1 {
+  color: var(--sz-sage-900);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 4vw, 46px);
+  letter-spacing: 0;
+}
+.adminShell .adminTitle p {
+  color: var(--sz-wood);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+.adminShell .adminTitle span {
+  color: var(--admin-muted);
+  font-size: 13px;
+}
+.adminShell .adminContent h2,
+.adminShell .adminContent h3,
+.adminShell .cardHeading h2,
+.adminShell .cardHeading h3,
+.adminShell .adminVisualHead h3 {
+  color: var(--sz-sage-900);
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.adminShell .adminContent h2 { font-size: 26px; }
+.adminShell .adminContent h3 { font-size: 21px; }
+
+/* ---- Numbers: rounded Fredoka like prices on the store ---- */
+.adminShell article b,
+.adminShell .premiumMetricValue,
+.adminShell .miniMetricCard strong,
+.adminShell .miniMetricCard b,
+.adminShell .financeSummaryCard strong,
+.adminShell .statementTotal,
+.adminShell .productMetrics b {
+  font-family: var(--font-numeric);
+  font-weight: 600;
+  color: var(--sz-sage-900);
+}
+
+/* ---- Cards: soft cream cards with the storefront radius/shadow ---- */
+.adminShell .adminCard,
+.adminShell .adminVisualCard,
+.adminShell .miniMetricCard,
+.adminShell .managementCard,
+.adminShell .financeSummaryCard,
+.adminShell .analyticsCard,
+.adminShell .orderDetailCard,
+.adminShell .orderOpsCard,
+.adminShell .productEditorCard,
+.adminShell .paymentRulesCard {
+  background: #fffdf9;
+  border: 1px solid var(--admin-line);
+  border-radius: 18px;
+  box-shadow: var(--sz-shadow-soft);
+}
+
+/* ---- Buttons: pill, sage, hand-drawn label (like "Shop Now") ---- */
+.adminShell .adminTitle > button,
+.adminShell .saveProduct {
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: var(--sz-sage-700);
+  color: var(--sz-cream-50);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  box-shadow: var(--sz-shadow-soft);
+}
+.adminShell .adminTitle > button,
+.adminShell .saveProduct {
+  /* mobile media queries in admin.css force a light button background */
+  background: var(--sz-sage-700) !important;
+  color: var(--sz-cream-50) !important;
+  border-color: var(--sz-sage-700) !important;
+}
+.adminShell .adminTitle > button:hover,
+.adminShell .saveProduct:hover {
+  background: var(--sz-sage-600) !important;
+  box-shadow: var(--sz-shadow-lift);
+}
+.adminShell .adminTopbar button,
+.adminShell .adminTopbar a {
+  border-radius: 999px;
+}
+
+/* ---- Forms: storefront .field look ---- */
+.adminShell .adminContent input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+.adminShell .adminContent select,
+.adminShell .adminContent textarea {
+  border-radius: 12px;
+  border-color: var(--sz-sage-300);
+  background: var(--sz-cream-50);
+}
+.adminShell .adminContent input:focus,
+.adminShell .adminContent select:focus,
+.adminShell .adminContent textarea:focus {
+  border-color: var(--sz-sage-600);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(95, 115, 80, 0.22);
+}
+
+/* ---- Tables ---- */
+.adminShell .adminTableWrap {
+  border-radius: 18px;
+}
+.adminShell .adminTable th {
+  background: var(--sz-cream-100);
+  color: var(--admin-muted);
+}
+.adminShell .adminTable tbody tr:hover td {
+  background: #fdf9f2;
+}
+
+/* ---- Status pills ---- */
+.adminShell .statusBadge {
+  border-radius: 999px;
+}
+
+/* ---- Login screen ---- */
+.adminLoginShell {
+  background: var(--sz-cream-50, #fbf7f0) !important;
+}
+.adminLoginShell h1,
+.adminLoginShell h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: #34442e;
+}
+.adminLoginShell button {
+  border-radius: 999px;
+  background: #4e6142;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+.adminLoginShell input {
+  border-radius: 12px;
+}
+
+/* ---- Dashboard hero actions + metric cards ---- */
+.adminShell .dashboardPrimaryAction,
+.adminShell .adminContent button.primary,
+.adminShell .adminContent .primaryButton {
+  border-radius: 999px;
+  background: var(--sz-sage-700) !important;
+  border-color: var(--sz-sage-700) !important;
+  color: var(--sz-cream-50);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  box-shadow: var(--sz-shadow-soft);
+}
+.adminShell .dashboardPrimaryAction:hover {
+  background: var(--sz-sage-600) !important;
+  border-color: var(--sz-sage-600) !important;
+  box-shadow: var(--sz-shadow-lift);
+}
+.adminShell .dashboardRefresh {
+  border-radius: 999px;
+  border: 1.5px solid var(--sz-sage-700);
+  background: transparent;
+  color: var(--sz-sage-900);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+}
+.adminShell .premiumMetricCard {
+  background: #fffdf9;
+  border-radius: 18px;
+  box-shadow: var(--sz-shadow-soft);
+}
+.adminShell .premiumMetricValue {
+  font-size: 26px;
+}
+
+.adminShell .dashboardTitle h1 { font-size: clamp(30px, 3.2vw, 40px); }
+
+/* Secondary header actions (Sync, Export, Refresh…) → storefront .btn-secondary */
+.adminShell .adminTitle div button:not(.dashboardPrimaryAction),
+.adminShell .adminTitle div a {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px !important;
+  border: 1.5px solid var(--sz-sage-700) !important;
+  background: transparent !important;
+  color: var(--sz-sage-900) !important;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  box-shadow: none !important;
+}
+.adminShell .adminTitle div button:not(.dashboardPrimaryAction):hover,
+.adminShell .adminTitle div a:hover {
+  background: var(--sz-sage-100) !important;
+}
+
+.adminShell .customOrderCta {
+  border-radius: 999px !important;
+  background: var(--sz-sage-700) !important;
+  border-color: var(--sz-sage-700) !important;
+  color: var(--sz-cream-50) !important;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  box-shadow: var(--sz-shadow-soft);
+}
+.adminShell .customOrderCta:hover { background: var(--sz-sage-600) !important; }
+.adminShell .adminTitle div button span { font-size: inherit; font-weight: inherit; text-transform: none; letter-spacing: inherit; }
+
+.adminLoginCard { border-radius: 18px !important; border-color: #e6ddcc !important; background: #fffdf9 !important; box-shadow: 0 14px 30px -12px rgba(52, 68, 46, 0.28) !important; }

@@ -175,12 +175,18 @@ export default async function Home() {
             <h2 id="story-title" className="section-title">Hi, I&apos;m {brand.maker.name} ♡</h2>
             <div className="mt-4 max-w-[520px] space-y-3 text-[15px] leading-relaxed text-muted">
               <p>
-                {brand.name} started on a rainy afternoon with one hook, one ball of yarn and a very wonky bunny. Today
-                it&apos;s a tiny studio where every toy, bag and bouquet is still made by hand, one stitch at a time.
+                {brand.name} began with a love for yarn, creativity and the magic of handmade things. What started with
+                a simple crochet hook and a little imagination has grown into a collection of thoughtfully handcrafted
+                pieces — from cosy cardigans and stylish bags to adorable plushies, accessories and home décor.
               </p>
               <p>
-                I choose soft cotton yarns that are safe for babies and kind to the planet, and I check every piece
-                twice before it&apos;s wrapped. Slight differences are part of the charm — no two are exactly alike.
+                Every piece is made with care, patience and attention to detail. Whether it&apos;s something to wear,
+                carry, decorate your space with or gift to someone special, we believe handmade things carry a charm of
+                their own.
+              </p>
+              <p>
+                No two pieces are ever exactly alike, and that&apos;s what makes them special. Every stitch tells a
+                little story, and we&apos;re here to make yours.
               </p>
             </div>
             <p className="mt-6 -rotate-2 font-hand text-[30px] text-sage-900">— {brand.maker.name}</p>
