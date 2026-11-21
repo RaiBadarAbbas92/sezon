@@ -4,7 +4,7 @@ import { cache } from "react";
 import { categories as localCategories, type Category } from "./brand";
 import { matchCategorySlug, slugify } from "./categories";
 import { products as localProducts, type ColorOption, type Product } from "./products";
-import { supabaseConfigured, supabaseRequest } from "./supabase";
+import { supabaseAdminConfigured, supabaseConfigured, supabaseRequest } from "./supabase";
 
 export interface Catalog {
   products: Product[];
@@ -44,7 +44,7 @@ type Row = Record<string, unknown>;
 // The category structure is fixed in lib/brand.ts; `catalog_categories` rows only contribute a cover image.
 function withImages(rows: Row[]): Category[] {
   const image = (slug: string) => {
-    const row = rows.find((r) => r.slug === slug && r.is_active !== false);
+    const row = rows.find((r) => r.slug === slug && r.is_active !== false && (r.status ?? "Active") === "Active");
     return (row?.image_url ?? row?.image ?? undefined) as string | undefined;
   };
   return localCategories.map((c) => ({ ...c, image: image(c.slug) ?? c.image }));
@@ -88,7 +88,10 @@ function mapProduct(row: Row, cats: Category[]): Product | null {
 }
 
 async function loadFromSupabase(): Promise<Catalog> {
-  const opts = { tags: ["catalog"] };
+  // Server-only read. Prefer the service key: after scripts/supabase-security-hardening.sql the anon key may only
+  // read whitelisted product columns, so `select=*` (cost_breakdown metadata, inventory embed) needs service role.
+  // Admin saves call revalidateTag("catalog") (lib/backend/catalog.js), so the store updates immediately.
+  const opts = { tags: ["catalog"], admin: supabaseAdminConfigured };
   const [catRows, productRows] = await Promise.all([
     supabaseRequest<Row[]>("catalog_categories?select=*&order=sort_order.asc.nullslast,name.asc", opts).catch(
       () => [] as Row[], // table missing → keep the local category list

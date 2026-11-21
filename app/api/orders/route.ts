@@ -4,6 +4,12 @@ import { NextResponse } from "next/server";
 import { getCatalog } from "@/lib/catalog";
 import { coupons, GIFT_WRAP_PRICE, shippingCost, shippingMethods, type ShippingId } from "@/lib/pricing";
 import { supabaseAdminConfigured, supabaseRequest } from "@/lib/supabase";
+import { BRAND_TAG, ORDER_PREFIX, SITE_URL } from "@/lib/backend/brand";
+import { sendMetaCapiEvent } from "@/lib/backend/metaCapi";
+import { sendOrderConfirmation } from "@/lib/backend/orderEmail";
+import { paymentSnapshot } from "@/lib/backend/paymentRules";
+import { getStoreSettings } from "@/lib/backend/storeSettings";
+import { randomUUID } from "crypto";
 
 interface OrderBody {
   customer?: { name?: string; phone?: string; email?: string; city?: string; address?: string; landmark?: string; notes?: string };
@@ -64,7 +70,12 @@ export async function POST(request: Request) {
   const discount = code && coupons[code] ? Math.round(subtotal * coupons[code]) : 0;
   const delivery = shippingCost(shipping, subtotal) + (body.giftWrap ? GIFT_WRAP_PRICE : 0);
   const total = subtotal - discount + delivery;
-  const orderNumber = `SZ-${Date.now().toString(36).toUpperCase()}${Math.floor(Math.random() * 90 + 10)}`;
+  const orderNumber = `${ORDER_PREFIX}-${Date.now().toString().slice(-6)}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+  // Non-COD methods are paid in full up front and verified by the admin (Payment status: Advance Pending).
+  const advance = payment === "cod" ? 0 : total;
+  const paymentDetails = await getStoreSettings()
+    .then((st: { paymentSettings?: Record<string, unknown> }) => paymentSnapshot(st?.paymentSettings ?? {}))
+    .catch(() => paymentSnapshot({}));
 
   const noteParts = [
     customer.notes,
@@ -81,10 +92,22 @@ export async function POST(request: Request) {
       prefer: "return=representation",
       body: {
         order_number: orderNumber,
+        checkout_token: randomUUID(),
         status: "pending",
+        courier_status: "pending",
         payment_method: payment === "cod" ? "cod" : "full_advance",
-        subtotal,
-        subtotal_pkr: subtotal,
+        payment_status: advance > 0 ? "Advance Pending" : "COD Pending",
+        payment_proof_status: advance > 0 ? "Advance Pending" : "COD Pending",
+        order_confirmation_status: "Confirmed",
+        fulfillment_status: advance > 0 ? "On hold" : "Unfulfilled",
+        product_subtotal_pkr: subtotal - discount,
+        delivery_charges_pkr: delivery,
+        total_order_value_pkr: total,
+        amount_payable_in_advance_pkr: advance,
+        amount_payable_on_delivery_pkr: total - advance,
+        payment_details_snapshot: paymentDetails,
+        subtotal: subtotal - discount,
+        subtotal_pkr: subtotal - discount,
         shipping_fee_pkr: delivery,
         delivery_pkr: delivery,
         total,
@@ -92,6 +115,7 @@ export async function POST(request: Request) {
         shipping_full_name: customer.name,
         shipping_phone: customer.phone,
         shipping_line1: customer.address,
+        shipping_line2: customer.landmark || "",
         shipping_address: customer.address,
         shipping_city: customer.city,
         shipping_country: "Pakistan",
@@ -100,7 +124,8 @@ export async function POST(request: Request) {
         guest_email: customer.email || null,
         customer_email: customer.email || null,
         notes: noteParts.join(" · ") || null,
-        tags: ["sezon-web"],
+        internal_notes: noteParts.join(" · ") || null,
+        tags: [BRAND_TAG],
         items: items.map((l) => ({
           slug: l.product.slug,
           name: l.product.name,
@@ -128,6 +153,44 @@ export async function POST(request: Request) {
         image_url: l.product.images[0]?.startsWith("ph:") ? null : l.product.images[0],
       })),
     });
+
+    // Fire-and-forget: Meta CAPI Purchase (eventId = order number, dedupes with the browser pixel) + confirmation email.
+    const [firstName, ...rest] = customer.name.split(/\s+/);
+    const cookies = request.headers.get("cookie") ?? "";
+    const cookie = (name: string) => cookies.match(new RegExp(`(?:^|; )${name}=([^;]+)`))?.[1];
+    sendMetaCapiEvent({
+      eventName: "Purchase",
+      eventId: orderNumber,
+      eventSourceUrl: `${SITE_URL}/checkout`,
+      userData: {
+        phone: customer.phone,
+        email: customer.email,
+        firstName,
+        lastName: rest.join(" "),
+        city: customer.city,
+        country: "pk",
+        externalId: orderNumber,
+        fbp: cookie("_fbp"),
+        fbc: cookie("_fbc"),
+      },
+      customData: {
+        value: total,
+        currency: "PKR",
+        orderId: orderNumber,
+        contentIds: items.map((l) => l.product.id),
+        contents: items.map((l) => ({ id: l.product.id, quantity: l.qty, item_price: l.product.price })),
+        numItems: items.reduce((n, l) => n + l.qty, 0),
+      },
+      clientIp: request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "",
+      userAgent: request.headers.get("user-agent") || "",
+      triggeredBy: "server",
+    }).catch((err: unknown) => console.error("[orders] Meta CAPI failed:", err));
+    sendOrderConfirmation({
+      customer: { ...customer, firstName, fullName: customer.name },
+      order: { id: order.id, order_number: orderNumber, total, subtotal: subtotal - discount, delivery, payment_method: payment, payment_status: "Awaiting Payment" },
+      trackingNumber: "",
+      items: items.map((l) => ({ name: l.product.name, quantity: l.qty, price: l.product.price })),
+    }).catch((err: unknown) => console.error("[orders] confirmation email failed:", err));
 
     return NextResponse.json({ ok: true, orderNo: orderNumber, total });
   } catch (err) {

@@ -10,6 +10,32 @@ const anonKey =
 const serviceKey =
   process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_SECRET_KEY;
 
+/** Upload a file to a public Supabase Storage bucket (created on first use) and return its public URL. */
+export async function uploadPublicFile(bucket: string, path: string, data: ArrayBuffer, contentType: string) {
+  if (!url || !serviceKey) throw new Error("Supabase service key missing");
+  const headers = { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` };
+  const put = () =>
+    fetch(`${url}/storage/v1/object/${bucket}/${path}`, {
+      method: "POST",
+      headers: { ...headers, "Content-Type": contentType, "x-upsert": "true", "Cache-Control": "31536000" },
+      body: data,
+      signal: AbortSignal.timeout(30_000),
+    });
+
+  let res = await put();
+  if (!res.ok && (res.status === 404 || res.status === 400)) {
+    // bucket doesn't exist yet → create it (public read) and retry once
+    await fetch(`${url}/storage/v1/bucket`, {
+      method: "POST",
+      headers: { ...headers, "Content-Type": "application/json" },
+      body: JSON.stringify({ id: bucket, name: bucket, public: true }),
+    });
+    res = await put();
+  }
+  if (!res.ok) throw new Error(`Upload failed (${res.status}): ${(await res.text()).slice(0, 200)}`);
+  return `${url}/storage/v1/object/public/${bucket}/${path}`;
+}
+
 export const supabaseConfigured = Boolean(url && (anonKey || serviceKey));
 export const supabaseAdminConfigured = Boolean(url && serviceKey);
 

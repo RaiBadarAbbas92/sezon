@@ -157,9 +157,8 @@ export default function CheckoutPage() {
         }),
       });
       const data = await res.json().catch(() => ({}));
-      if (res.ok) orderNo = data.orderNo;
-      // 503 = Supabase not connected yet (local demo) — keep the old mock flow so the store still works.
-      else if (res.status === 503) orderNo = `SZ-${Date.now().toString().slice(-6)}`;
+      // Never show a success screen for an order that was not saved (503 = service key missing on the server).
+      if (res.ok && data.orderNo) orderNo = data.orderNo;
       else throw new Error(data.error || "We couldn't place your order. Please try again.");
     } catch (err) {
       setOrderError(err instanceof Error ? err.message : "We couldn't place your order. Please try again.");
